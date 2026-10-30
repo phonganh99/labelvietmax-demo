@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#091c30">
 <meta name="description" content="Kế hoạch phát triển trợ lý AI điều phối đơn hàng Zalo OA/GMF cho Label Vietmax, 3 phương án đầu tư, ngân sách, tiến độ và rủi ro.">
-<title>LBVM | Kế hoạch AI Zalo OA — Trình duyệt logic V2.2</title>
+<title>LBVM | Kế hoạch AI Zalo OA — Trình duyệt logic V2.3 (V1 Reliability)</title>
 <style>
 :root{--navy:#091c30;--navy2:#102a40;--aqua:#18b9a5;--aqua2:#d9f6ee;--paper:#f5f8fb;--ink:#183148;--muted:#607487;--line:#dbe5ec;--white:#fff;--gold:#ffca72;--shadow:0 18px 46px rgba(8,30,48,.09)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}a{color:#0b7c76;text-decoration:none}a:hover{text-decoration:underline}
@@ -23,8 +23,8 @@ table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;p
 </style>
 </head>
 <body>
-<header class="top"><div class="topin"><div class="brand">LABEL<span>VIETMAX</span> <span class="topright">/ Automation Roadmap</span></div><nav aria-label="Điều hướng"><a href="#trinh-duyet">Logic 3 workflow</a><a href="#tongquan">Tổng quan</a><a href="#phuong-an">Phương án</a><a href="#ngan-sach">Ngân sách</a><a href="#lo-trinh">Lộ trình</a><a href="#cs-giai-doan-sau">Nâng cấp sau</a><a href="#cskh">AI CSKH</a><a href="#may-tinh">Dự toán tương tác</a></nav><button class="navbtn" onclick="window.print()">In / Lưu PDF</button></div></header>
-<div class="hero"><div class="wrap"><div class="hero-in"><div><div class="eyebrow">BẢN TRÌNH DUYỆT LOGIC • V2.2 • 30/10/2026</div><h1>Hệ thống AI tiếp nhận &amp; điều phối đơn hàng <span class="accent">Zalo OA</span></h1><p>Chuyển đổi nhóm khách hàng từ Zalo cá nhân sang OA/GMF trong 1–2 tháng; xây nền tảng nhận diện đơn, duyệt đơn, giao việc sản xuất và thông báo tiến độ cho Label Vietmax.</p><div class="chips"><span class="chip">AI CSKH có kiểm soát</span><span class="chip">20–50 đơn/ngày</span><span class="chip">Zalo OA/GMF chính thức</span><span class="chip">Codex + Claude</span><span class="chip">3 kịch bản ngân sách</span></div></div><aside class="hero-panel"><div class="tiny">PHƯƠNG ÁN ĐỀ XUẤT</div><div class="big">PA2 — Tối ưu</div><div>Codex + Claude API + Cloudflare + Zalo OA Tăng trưởng</div><hr><div class="big">2,34–3,09 triệu</div><div class="tiny">VNĐ/tháng, đã gồm ChatGPT Plus &amp; Claude Pro; giả định 33 nhóm GMF-10</div><hr><div class="tiny">Mốc kiểm chứng quan trọng</div><strong>Nhận được webhook và gửi tin qua GMF thật trước khi mua dài hạn/mở rộng.</strong></aside></div></div></div>
+<header class="top"><div class="topin"><div class="brand">LABEL<span>VIETMAX</span> <span class="topright">/ Automation Roadmap</span></div><nav aria-label="Điều hướng"><a href="#trinh-duyet">Logic 3 workflow</a><a href="#tongquan">Tổng quan</a><a href="#phuong-an">Phương án</a><a href="#ngan-sach">Ngân sách</a><a href="#lo-trinh">Lộ trình</a><a href="#reliability-v1">Ổn định V1</a><a href="#cs-giai-doan-sau">Nâng cấp sau</a><a href="#cskh">AI CSKH</a><a href="#may-tinh">Dự toán tương tác</a></nav><button class="navbtn" onclick="window.print()">In / Lưu PDF</button></div></header>
+<div class="hero"><div class="wrap"><div class="hero-in"><div><div class="eyebrow">BẢN TRÌNH DUYỆT LOGIC • V2.3 • 30/10/2026</div><h1>Hệ thống AI tiếp nhận &amp; điều phối đơn hàng <span class="accent">Zalo OA</span></h1><p>Chuyển đổi nhóm khách hàng từ Zalo cá nhân sang OA/GMF trong 1–2 tháng; xây nền tảng nhận diện đơn, duyệt đơn, giao việc sản xuất và thông báo tiến độ cho Label Vietmax.</p><div class="chips"><span class="chip">AI CSKH có kiểm soát</span><span class="chip">20–50 đơn/ngày</span><span class="chip">Zalo OA/GMF chính thức</span><span class="chip">Codex + Claude</span><span class="chip">3 kịch bản ngân sách</span></div></div><aside class="hero-panel"><div class="tiny">PHƯƠNG ÁN ĐỀ XUẤT</div><div class="big">PA2 — Tối ưu</div><div>Codex + Claude API + Cloudflare + Zalo OA Tăng trưởng</div><hr><div class="big">2,34–3,09 triệu</div><div class="tiny">VNĐ/tháng, đã gồm ChatGPT Plus &amp; Claude Pro; giả định 33 nhóm GMF-10</div><hr><div class="tiny">Mốc kiểm chứng quan trọng</div><strong>Nhận được webhook và gửi tin qua GMF thật trước khi mua dài hạn/mở rộng.</strong></aside></div></div></div>
 <main class="wrap">
 <section id="trinh-duyet"><div class="section-head"><div><div class="kicker">00 / TÀI LIỆU TRÌNH DUYỆT</div><h2>Ba workflow chạy song song trong một hệ thống</h2></div><p>Không phải lựa chọn 1 trong 3. Một bộ điều phối tập trung nhận tin, kích hoạt từng workflow đúng tình huống và kiểm soát tin được phép gửi về Zalo.</p></div>
 <div class="callout"><strong>QUYẾT ĐỊNH ĐỀ XUẤT:</strong> WF1 xử lý đơn hàng; WF2 chăm sóc khách hàng, chuyển Sales khi cần; WF3 học từ Sales sau phê duyệt. <strong>Cả ba dùng chung dữ liệu và chạy song song.</strong> Một tin nhắn có thể tạo nhiều tác vụ, nhưng không được tạo nhiều câu trả lời tự động chồng nhau.</div>
@@ -57,7 +57,7 @@ table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;p
 <tr><td>D4</td><td>AI không tự báo giá chưa phê duyệt, cam kết ngày giao hoặc trả lời chen Sales</td><td>Chờ duyệt</td></tr>
 <tr><td>D5</td><td>Training từ Sales nhưng bắt buộc người quản lý duyệt trước khi xuất bản</td><td>Chờ duyệt</td></tr>
 <tr><td>D6</td><td>Phân quyền, bảo mật nhóm khách, chống trùng, nhật ký và phiên bản</td><td>Chờ duyệt</td></tr>
-<tr><td>D7</td><td>Dùng PA2 làm nền; đo lưu lượng AI CSKH và kiểm lại phí 2027 trước khi khóa ngân sách</td><td>Chờ duyệt</td></tr><tr><td>D8</td><td>Đồng ý đưa 7 tối ưu AI CSKH vào giai đoạn V2 sau nghiệm thu V1; chưa chốt thời gian/chi phí V2</td><td>Chờ duyệt</td></tr>
+<tr><td>D7</td><td>Dùng PA2 làm nền; đo lưu lượng AI CSKH và kiểm lại phí 2027 trước khi khóa ngân sách</td><td>Chờ duyệt</td></tr><tr><td>D8</td><td>Đồng ý đưa 7 tối ưu AI CSKH vào giai đoạn V2 sau nghiệm thu V1; chưa chốt thời gian/chi phí V2</td><td>Chờ duyệt</td></tr><tr><td>D9</td><td>V1 bắt buộc có gom tin nhiều phần, kiểm tra đủ thông số đơn và giám sát lỗi webhook/API/file trước go-live</td><td>Chờ duyệt</td></tr>
 </tbody></table></div>
 <p class="smalltext">Đây là bản trình duyệt nghiệp vụ. Chưa tích hợp OA thực tế, chưa khởi tạo hệ thống hay thực hiện bất kỳ chốt đơn thật nào.</p>
 <a href="https://github.com/phonganh99/labelvietmax-demo/blob/main/plans/logic-workflow-trinh-duyet-v2-1.md" target="_blank" rel="noopener"><strong>Xem tài liệu logic chi tiết để góp ý / duyệt trên GitHub</strong></a>
@@ -74,11 +74,53 @@ table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;p
 <p class="note">Các khoản OA trả theo kỳ 6/12 tháng được phân bổ bình quân theo tháng; không phải tất cả là hóa đơn thanh toán từng tháng. Giá API và hosting là dự phòng ngân sách, KHÔNG phải cam kết của nhà cung cấp. Chi phí thuê ngoài chỉ là khoảng ngân sách tham khảo, chưa có báo giá. ChatGPT Plus và Claude Pro là gói dành cho người phát triển; Claude API được tính riêng cho hệ thống. Chưa cộng thuế/phí thanh toán quốc tế, chi phí nhân sự, phí vượt hạn mức, tên miền, phí tin nhắn GMF từ 2027 (chưa đủ dữ liệu chốt) và phần nhóm cần GMF-50/100.</p>
 <div class="two" style="margin-top:19px"><div class="card"><h3 class="minihead">Giả định tính ngân sách</h3><ul class="bullets"><li>30 nhóm khách hàng + 3 nhóm nội bộ = <b>33 nhóm</b>.</li><li>Giả định tất cả đủ điều kiện dùng <b>GMF-10</b>.</li><li>PA1: Tăng trưởng 6 tháng, giá 1.400.000đ / 6 tháng, kèm 1 GMF.</li><li>PA2: Tăng trưởng 12 tháng, giá 2.500.000đ / năm, kèm 1 GMF.</li><li>PA3: Toàn diện 12 tháng, giá 6.000.000đ / năm, kèm 3 GMF.</li><li>Nhóm GMF-10 mua thêm: <b>25.000đ/nhóm/tháng</b>.</li></ul></div><div class="card"><h3 class="minihead">Điều kiện khóa ngân sách</h3><ul class="bullets"><li>Đếm số nhóm thực tế và số thành viên/nhóm.</li><li>Xác nhận OA đã xác thực, liên kết ZBS và quyền OpenAPI.</li><li>Kiểm thử 1 GMF thật: nhận webhook, đọc file, gửi tin.</li><li>Đo số tin nhắn &amp; token AI trên mẫu đơn thực tế.</li><li>Xác nhận bảng phí gửi tin GMF cho năm 2027.</li><li>Tách kinh phí thuê ngoài / nhân sự nội bộ khỏi vận hành.</li></ul></div></div></section>
 <section id="lo-trinh"><div class="section-head"><div><div class="kicker">04 / KẾ HOẠCH TRIỂN KHAI</div><h2>Lộ trình 8 tuần — chuyển đổi song song</h2></div><p>Đích đến là một hệ thống đơn hàng chung; nhóm cũ do Sales chuyển thông tin thủ công cho tới khi khách chuyển sang GMF.</p></div><div class="timeline">
-<div class="phase"><div class="num">TUẦN 1–2</div><h3>Kiểm chứng Zalo &amp; dữ liệu</h3><p>OA/ZBS, App API, 1 nhóm GMF thử, webhook, gửi tin; thiết kế schema khách hàng, đơn và file.</p></div>
-<div class="phase"><div class="num">TUẦN 3–4</div><h3>AI &amp; phê duyệt</h3><p>Trích xuất yêu cầu kỹ thuật tem nhãn, tìm đơn cũ, phát hiện sửa đổi, duyệt qua nhóm GMF nội bộ hoặc Web App.</p></div>
-<div class="phase"><div class="num">TUẦN 5–6</div><h3>Điều phối sản xuất</h3><p>Giao việc thiết kế → duyệt mẫu → sản xuất → QC → giao hàng; thông báo GMF có kiểm soát.</p></div>
-<div class="phase"><div class="num">TUẦN 7–8</div><h3>Nghiệm thu &amp; mở rộng</h3><p>Kiểm thử đơn sửa, trùng tin, lỗi webhook, file thất bại; đào tạo nhân sự và chuyển nhóm còn lại.</p></div></div>
+<div class="phase"><div class="num">TUẦN 1–2</div><h3>Kiểm chứng Zalo + lưu sự kiện</h3><p>OA/ZBS, webhook và gửi tin GMF thử; lưu sự kiện gốc trước khi chạy AI; định danh nguồn, chống trùng, cơ chế kiểm tra tin/file.</p></div>
+<div class="phase"><div class="num">TUẦN 3–4</div><h3>Gom tin + AI + duyệt đơn</h3><p>Message Buffer &amp; Aggregator; tổng hợp tin khách nhiều phần; kiểm tra đủ thông số theo loại đơn; AI tạo nháp; duyệt qua GMF nội bộ hoặc Web App.</p></div>
+<div class="phase"><div class="num">TUẦN 5–6</div><h3>Sản xuất + Reliability Monitor</h3><p>Giao việc thiết kế → duyệt mẫu → sản xuất → QC; theo dõi lỗi webhook/API/file, outbox gửi tin, thử lại có giới hạn, thông báo lỗi cho quản trị.</p></div>
+<div class="phase"><div class="num">TUẦN 7–8</div><h3>Kiểm thử sự cố &amp; mở rộng</h3><p>Thử tin nhiều phần, tin đến muộn/sai thứ tự, file thiếu/lỗi, trùng webhook, mất kết nối, gửi tin thất bại; đối chiếu với nhóm thực và nghiệm thu trước khi nhân rộng.</p></div></div>
 <div class="two" style="margin-top:17px"><div class="card"><h3 class="minihead">Dữ liệu đầu vào AI cần chuẩn hóa</h3><p class="muted">Khách hàng, mã sản phẩm/mã đơn cũ, tên tem, kích thước, chất liệu, số lượng, màu in, quy cách cuộn/lõi/hướng quấn, gia công, file thiết kế, ngày yêu cầu và ghi chú thay đổi.</p></div><div class="card"><h3 class="minihead">Điều kiện nghiệm thu kỹ thuật</h3><p class="muted">Tin được gắn đúng nhóm và người gửi; không tạo trùng đơn; phát hiện đơn sửa; lưu nhật ký người duyệt; không phát lệnh sản xuất khi thiếu thông tin; có cơ chế khôi phục khi webhook/gửi tin thất bại.</p></div></div></section>
+
+<section id="reliability-v1">
+ <div class="section-head"><div><div class="kicker">04A / BẮT BUỘC NGAY TRONG V1</div><h2>Ba lớp bảo vệ dữ liệu khi AI xử lý nhiều tin nhắn</h2></div><p>Phạm vi triển khai 8 tuần V1 được bổ sung logic chống xử lý thiếu tin và sự cố API. Đây là yêu cầu thiết kế/kiểm thử, không phải tính năng đã chạy thực tế.</p></div>
+ <div class="callout"><strong>Quy tắc thiết kế:</strong> Không xử lý theo kiểu “mỗi tin nhắn = một đơn hàng / một phản hồi”. Phải <b>nhận và lưu mọi sự kiện → gom theo ngữ cảnh → kiểm tra dữ liệu → chỉ chuyển bước khi đủ điều kiện</b>. AI có thể tự làm phần tiếp nhận, tổng hợp và phân loại; quyền duyệt sản xuất và cam kết thương mại vẫn thuộc người được phân quyền.</div>
+ <div class="grid3" style="margin-top:18px">
+  <div class="card"><span class="pill green">V1-01 · BẮT BUỘC</span><h3>Message Buffer &amp; Aggregator</h3><p class="muted">Lưu nguyên bản từng webhook trước khi gọi AI; chống trùng theo ID; gom nhiều tin của khách theo nhóm, người gửi và chủ đề. Khoảng chờ thử nghiệm 15–20 giây tính từ tin cuối, có cấu hình; khi có tin/file mới hoặc tin đến muộn phải tính lại bản nháp, tránh phản hồi quá sớm.</p></div>
+  <div class="card"><span class="pill green">V1-02 · BẮT BUỘC</span><h3>Order Completeness Validator</h3><p class="muted">Đối chiếu danh sách trường bắt buộc theo loại tem/đơn mới/đặt lại; phân biệt đã biết, thiếu, mâu thuẫn, đang chờ file và cần xác minh. Đơn chưa đủ chỉ là bản nháp, không trình duyệt sản xuất như đơn hoàn chỉnh.</p></div>
+  <div class="card"><span class="pill green">V1-03 · BẮT BUỘC</span><h3>Reliability Monitor</h3><p class="muted">Theo dõi xác thực/token OA, lỗi webhook, API gửi tin, file đính kèm, giới hạn gọi, sự kiện trùng và backlog xử lý. Có outbox, thử lại có giới hạn với lỗi tạm thời, đối soát trong phạm vi API được cấp và cảnh báo quản trị.</p></div>
+ </div>
+ <div class="card" style="margin-top:18px">
+ <h3 class="minihead">Tình huống: Khách gửi 5 tin rời nhau</h3>
+ <div class="tablewrap"><table><thead><tr><th>Tin khách</th><th>Thông tin trích xuất</th><th>Trạng thái</th></tr></thead><tbody>
+ <tr><td>1. “Đặt lại mẫu tem lần trước”</td><td>Yêu cầu đặt lại; cần tra đúng mã mẫu/đơn cũ</td><td>Chưa đủ</td></tr>
+ <tr><td>2. “50.000 chiếc”</td><td>Số lượng 50.000</td><td>Bổ sung nháp</td></tr>
+ <tr><td>3. “Kích thước 50 × 30 mm”</td><td>Kích thước 50 × 30 mm</td><td>Bổ sung nháp</td></tr>
+ <tr><td>4. “Đổi decal nhựa”</td><td>Đổi chất liệu; xem xét thay đổi bản thông số cũ</td><td>Đánh dấu phiên bản mới</td></tr>
+ <tr><td>5. “Em gửi file mới sau”</td><td>Đang chờ file thiết kế mới, chưa có file thật</td><td>Chờ file, không chốt</td></tr>
+ </tbody></table></div>
+ <p class="muted"><b>Kết quả:</b> hệ thống giữ <code>DRAFT / NEED_INFO / WAITING_FILE</code> với lịch sử 5 tin; AI không được coi câu “em gửi file” là file đã nhận. Khi file thực tế đến, kiểm tra tải file, gắn đúng phiên bản rồi mới kiểm tra điều kiện chuyển bước.</p>
+ </div>
+ <div class="two" style="margin-top:18px">
+  <div class="card"><h3 class="minihead">Nếu tin bị trễ hoặc chỉ nhận được một phần</h3>
+   <ul class="bullets">
+    <li><b>Nhận đủ tin nhưng AI đọc sót:</b> lưu nguyên bản, so khớp trường nguồn, chạy lại trích xuất hoặc chuyển Sales; không tự bịa thông số.</li>
+    <li><b>Chỉ nhận được 3/5 sự kiện:</b> hệ thống không thể biết chắc đã thiếu 2 tin; giữ nháp nếu dữ liệu chưa đủ và đối soát lịch sử khi API/giấy phép có hỗ trợ.</li>
+    <li><b>Tin đến sau khi tạo nháp:</b> cập nhật nháp thành phiên bản mới, hủy bản AI/gửi tin đang chờ nếu đã lỗi thời.</li>
+    <li><b>Thay đổi đơn đã duyệt:</b> không ghi đè hoặc sửa lệnh sản xuất cũ; tạo yêu cầu thay đổi để người có quyền duyệt lại.</li>
+   </ul>
+  </div>
+  <div class="card"><h3 class="minihead">Tiêu chí nghiệm thu trước go-live</h3>
+   <ul class="bullets">
+    <li>Thử 5–10 tin liên tiếp, tin đến muộn, sai thứ tự và sự kiện lặp.</li>
+    <li>Không mất lịch sử tin; không nhân đôi đơn hoặc tin gửi khi webhook được phát lại.</li>
+    <li>Không phát lệnh sản xuất khi thiếu file hoặc trường bắt buộc; không tự suy đoán thông số.</li>
+    <li>File hỏng, tải chậm, token hết hạn hoặc API lỗi phải có trạng thái/cảnh báo riêng.</li>
+    <li>Gửi tin có outbox và trạng thái xác nhận; không tự báo thành công khi API từ chối.</li>
+    <li>Chạy thử nhóm GMF thực, đối chiếu tin thực tế và đo tỷ lệ nhận tin, trích xuất đúng, gửi tin thành công.</li>
+   </ul>
+  </div>
+ </div>
+ <div class="callout"><b>Không cam kết trước tỷ lệ thành công:</b> Zalo OA/GMF dùng API chính thức nhưng cần xác minh quyền ứng dụng và thử tải dữ liệu/tin/file thật của LBVM. Chỉ được công bố tỷ lệ tiếp nhận hoặc trả lời tự động sau khi có số liệu đối chiếu. <b>Dự toán PA2 là mức nền;</b> cần cập nhật thời gian lập trình, xử lý sự cố và lưu lượng thực sau thử nghiệm.</div>
+</section>
 <section id="cs-giai-doan-sau"><div class="section-head"><div><div class="kicker">05A / ROADMAP CSKH</div><h2>Giai đoạn nâng cấp sau V1</h2></div><p>Bổ sung 7 hướng cải tiến để xem xét sau khi go-live; không mở rộng phạm vi 8 tuần.</p></div>
 <div class="card" style="margin-top:20px;border:2px solid #d1e5e2">
   <div class="kicker">GIAI ĐOẠN SAU / V2 — NÂNG CẤP AI CSKH</div>
