@@ -1,4 +1,4 @@
-# LBVM — LOGIC TỔNG THỂ 3 WORKFLOW (BẢN TRÌNH DUYỆT V2.2)
+# LBVM — LOGIC TỔNG THỂ 3 WORKFLOW (BẢN TRÌNH DUYỆT V2.3)
 
 **Đơn vị:** Label Vietmax (LBVM)  
 **Ngày:** 30/10/2026  
@@ -65,6 +65,37 @@ flowchart TD
 
 **Không đủ bất kỳ điều kiện nào → không tự gửi nội dung chuyên môn → ticket Sales.**
 
+### B1. Ba module bảo đảm tin nhắn và đơn hàng — yêu cầu bắt buộc V1
+
+**V1-01 — Message Buffer & Aggregator**
+
+- Webhook hợp lệ phải được lưu **bền vững** trước khi xử lý AI; phản hồi webhook nhanh và xử lý bất đồng bộ bằng hàng đợi/worker. Lưu mã sự kiện, nhóm, người gửi, thời gian tin và thời gian nhận, loại tin, file, nội dung nguyên bản và trạng thái.
+- Chống trùng bằng khóa duy nhất theo ID sự kiện/tin; nếu không đủ ID thì xây khóa chống trùng có phạm vi rõ. Một webhook được phát lại không tạo đơn hay phản hồi lặp.
+- Gom các tin gần nhau theo nhóm/người/vấn đề. **15–20 giây từ tin cuối** chỉ là thông số thử nghiệm, không phải định nghĩa “khách đã gửi xong”. Câu “chờ em gửi file” phải đặt trạng thái chờ file; có timeout cấu hình và chuyển Sales khi chờ quá lâu.
+- Tin đến muộn, đảo thứ tự, hoặc bản trích xuất mới mâu thuẫn bản cũ phải kích hoạt đánh giá lại, tăng phiên bản nháp và vô hiệu hóa tác vụ AI/outbox chưa gửi dựa trên phiên bản cũ.
+- Khi có nhiều người/vấn đề đồng thời mà không thể ghép chắc chắn, tách ticket hoặc chuyển Sales; không nhập dữ liệu tùy tiện vào đơn khác.
+
+**V1-02 — Order Completeness Validator**
+
+- Các trường bắt buộc **theo từng loại đơn/sản phẩm**: khách/nhóm, mã đơn/mẫu cũ nếu đặt lại, tên sản phẩm, số lượng, kích thước, chất liệu, file/bản mẫu, các option in và gia công bắt buộc, thông tin deadline khi có cam kết và thông tin cần xác minh.
+- Mỗi trường ghi `value`, `source_message_id`, `confidence/verification`, `last_updated`, `order_version`. Phân biệt: `KNOWN`, `MISSING`, `CONFLICTED`, `WAITING_FILE`, `NEEDS_CONFIRMATION`.
+- `DRAFT/NEED_INFO/WAITING_FILE` được lưu nhưng **không được chuyển thành lệnh sản xuất**. Chỉ khi dữ liệu đầy đủ, không mâu thuẫn và đúng phiên bản mới được gửi quản lý duyệt; **người quản lý** chốt lệnh.
+- File mới chỉ được tính là đã nhận khi webhook/file tồn tại và tải/lưu thành công, không phải chỉ vì khách thông báo “sẽ gửi”.
+- Đơn đã duyệt khi có sửa đổi phải có phiên bản mới và người có quyền duyệt thay đổi; không tự ghi đè lịch sử hoặc âm thầm cập nhật lệnh sản xuất đang chạy.
+
+**V1-03 — Reliability Monitor**
+
+- Theo dõi lỗi webhook, bộ xử lý, token, API gửi OA/GMF, giới hạn gọi, lỗi file, backlog và các lần thử lại. Có `inbox_events`, `outbox_messages`, `processing_attempts`, `error_logs`.
+- Gửi tin dùng outbox có khóa idempotency, trạng thái `QUEUED/SENDING/SENT/FAILED` và cơ chế thử lại có giới hạn chỉ với lỗi tạm thời. Không thông báo “đã gửi” khi API chưa xác nhận; tách gửi thành công ở API với khách thực sự đọc.
+- Khi có quyền và endpoint phù hợp, đối soát tin gần đây sau mất kết nối. **Không được cam kết có thể thu hồi toàn bộ tin/file đã mất** nếu API Zalo không hỗ trợ hoặc không được cấp quyền.
+- Cảnh báo Admin/Sales khi sai nhóm, gửi lỗi kéo dài, nhiều sự kiện lỗi, file chưa tải hoặc đơn đã chờ thông tin quá lâu. Có chế độ dừng tự trả lời nếu dữ liệu/nguồn không đáng tin.
+
+**Ví dụ kiểm thử 5 tin:** (1) đặt lại mẫu cũ; (2) 50.000 chiếc; (3) kích thước 50 × 30 mm; (4) đổi decal nhựa; (5) “sẽ gửi file mới”. Hệ thống tạo **một đơn nháp phiên bản mới**, đánh dấu mẫu cũ cần đối chiếu và `WAITING_FILE`. Không coi lời hứa gửi file là file đã nhận, không trình duyệt sản xuất khi thiếu dữ liệu.
+
+**Ca lỗi bắt buộc:** 5–10 tin liên tiếp; thiếu 1 tin; webhook trùng; đến muộn; đảo thứ tự; file đính kèm tải thất bại; đơn sửa sau duyệt; token lỗi; API từ chối; gửi thất bại; mâu thuẫn thông số; đồng thời Sales đang trả lời.
+
+**Đo nghiệm thu:** so sánh tin được lưu với tin thực tế trong nhóm GMF thử (khi có quyền đối chiếu), độ chính xác trích xuất, số đơn/tin bị nhân đôi, lỗi phát lệnh khi thiếu dữ liệu, tỷ lệ gửi API được chấp nhận, tỷ lệ lỗi được cảnh báo. Không tự đặt tỷ lệ thành công trước khi có kiểm thử thực tế.
+
 ## C. Ví dụ cần được nghiệm thu
 
 **Tin khách:** “Tem nhựa có chống nước không? Anh đặt lại 50.000 cái như đơn trước, thứ Sáu nhận được chứ?”
@@ -92,7 +123,7 @@ Cần ít nhất các bảng nghiệp vụ: `customers`, `zalo_groups`, `message
 - **Đã tính hai thuê bao phát triển:** ChatGPT Plus khoảng **516.000đ/tháng** và Claude Pro khoảng **516.000đ/tháng** theo tỷ giá tham khảo 30/10/2026.
 - **Dự toán nền PA2:** **2,34–3,09 triệu đồng/tháng**, theo giả định **30 nhóm khách + 3 nhóm nội bộ = 33 nhóm GMF-10**. Mức mục tiêu ~3 triệu/tháng **chưa bảo đảm bao trọn AI CSKH** vì chưa đo số câu hỏi, lượt gọi Claude và phí tin từ 2027.
 - **Chuyển đổi:** 1–2 tháng từ nhóm cá nhân sang OA/GMF; nhóm cũ do Sales nhập/chuyển tiếp thủ công trong giai đoạn quá độ.
-- **Mốc triển khai mục tiêu:** 8 tuần; xác minh quyền OA/GMF, webhook, nhận/gửi tin trên nhóm thử **trước** khi nhân rộng. Không cam kết chính xác 100% trước nghiệm thu.
+- **Mốc triển khai mục tiêu:** 8 tuần; **tuần 1–2** kiểm chứng OA/GMF + lưu bền vững webhook/chống trùng; **tuần 3–4** gom tin + kiểm tra đủ thông số + AI/duyệt; **tuần 5–6** điều phối sản xuất + Reliability Monitor/outbox; **tuần 7–8** kiểm thử tin nhiều phần/tin đến muộn/file lỗi và nghiệm thu nhóm thật trước khi mở rộng. Không cam kết chính xác 100% trước nghiệm thu.
 
 ## G. Backlog giai đoạn 2 — Tối ưu AI CSKH (không nằm trong scope 8 tuần V1)
 
@@ -124,6 +155,7 @@ Cần ít nhất các bảng nghiệp vụ: `customers`, `zalo_groups`, `message
 - [ ] **D6 — Dữ liệu & quyền:** Phân quyền nhóm khách, lưu nhật ký, giữ phiên bản đơn và chống lặp.
 - [ ] **D7 — Chi phí & lộ trình:** Chấp thuận PA2 làm hướng nền; cập nhật lại ngân sách sau đo thực tế và xác minh chi phí GMF 2027.
 - [ ] **D8 — Giai đoạn sau:** Chấp thuận xếp 7 tối ưu AI CSKH vào backlog V2 sau nghiệm thu V1; chưa cam kết thời hạn/chi phí V2.
+- [ ] **D9 — Reliability V1:** Bắt buộc có Message Buffer & Aggregator, Order Completeness Validator và Reliability Monitor trong V1; kiểm thử tin nhiều phần, webhook đến muộn, lỗi file/API trước khi triển khai khách thật.
 
 **Tình trạng duyệt:** Chưa có phê duyệt chính thức. Các ô trên dành cho người quản lý xác nhận.  
 **Ranh giới phạm vi:** Đây là bản logic/phân tích, chưa phải ứng dụng đã được tích hợp hay thử nghiệm với Zalo OA của LBVM.
