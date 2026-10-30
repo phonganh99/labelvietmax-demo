@@ -48,14 +48,14 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-
 </style>
 </head>
 <body>
-<header class="topbar"><a class="brand" href="#top"><span class="brandmark">VM</span><span><strong>LABEL<span>VIETMAX</span></strong><small>AI OPERATIONS · BLUEPRINT</small></span></a><div class="topright"><span class="date">Bản kế hoạch · 30/10/2026</span><b>OA đã xác thực</b><button onclick="window.print()">In / Lưu PDF</button></div></header>
+<header class="topbar"><a class="brand" href="#top"><span class="brandmark">VM</span><span><strong>LABEL<span>VIETMAX</span></strong><small>AI OPERATIONS · BLUEPRINT</small></span></a><div class="topright"><span class="date">Bản kế hoạch · 30/10/2026</span><b>Kịch bản: từ số 0</b><button onclick="window.print()">In / Lưu PDF</button></div></header>
 <div class="shell"><nav class="menu" aria-label="Mục lục">
 <div class="menutitle">NỘI DUNG DỄ THEO DÕI</div>
 <a href="#tongquan"><small>01</small>Tổng quan</a><a href="#logic"><small>02</small>Logic hệ thống</a><a href="#workflow"><small>03</small>Ba workflow</a><a href="#inbox"><small>04</small>Sales Inbox</a><a href="#timeline"><small>05</small>Timeline</a><a href="#chiphi"><small>06</small>Chi phí</a><a href="#duphong"><small>07</small>Dự phòng</a><a href="#kiemthu"><small>08</small>Nghiệm thu</a><a href="#thuatngu"><small>09</small>Giải thích</a>
 <div class="menu-note"><b>Đây là kế hoạch, không phải phần mềm đã chạy.</b><br>Đồng bộ Zalo OA/GMF cần kiểm chứng với tài khoản thật của LBVM trước khi triển khai.</div>
 </nav><main id="top">
 <section class="hero">
-<div class="tags"><span class="tag green">PA2 · PHƯƠNG ÁN CHỌN</span><span class="tag">V1 / 8 TUẦN</span><span class="tag">CÓ 3 CHẾ ĐỘ DỰ PHÒNG</span></div>
+<div class="tags"><span class="tag green">PA2 · PHƯƠNG ÁN CHỌN</span><span class="tag">V1 / 8 TUẦN</span><span class="tag amber">GIẢ ĐỊNH CHƯA CÓ BẤT KỲ TÀI KHOẢN NÀO</span></div>
 <p class="kicker">KẾ HOẠCH CHUYỂN ĐỔI SỐ LABEL VIETMAX</p><h1>Một hệ thống để <span>chăm khách, xử lý đơn</span> và quản lý sản xuất.</h1>
 <p class="lead">Khách vẫn nhắn Zalo. Sales dùng một giao diện quản lý chat giống Pancake. Claude AI hỗ trợ tổng hợp tin, xử lý đơn và tư vấn. Các quyết định về giá, ngày giao và sản xuất vẫn có người phê duyệt.</p>
 <div class="actions"><a href="#logic" class="action">Xem cách vận hành ↓</a><a href="#chiphi" class="action light">Xem chi phí</a></div>
@@ -64,7 +64,7 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-
 </section>
 <section class="section" id="tongquan"><p class="kicker">01 / TỔNG QUAN</p><h2>LBVM sẽ có những gì?</h2><p class="desc">Không làm chatbot đứng riêng. Tất cả chức năng sử dụng cùng dữ liệu đơn hàng để không mất thông tin giữa Sales, thiết kế và sản xuất.</p>
 <div class="grid3"><div class="card"><span class="tag green">KHÁCH HÀNG</span><h3 style="margin-top:13px">Vẫn dùng Zalo</h3><p>Khách hỏi tem, gửi file và đặt hàng qua nhóm GMF. Các nhóm Zalo cá nhân cũ được Sales theo dõi thủ công trong giai đoạn chuyển đổi.</p></div><div class="card"><span class="tag green">NHÂN VIÊN</span><h3 style="margin-top:13px">Web App tập trung</h3><p>Sales Inbox, danh sách đơn hàng, duyệt mẫu, giao việc sản xuất và báo cáo trên điện thoại/máy tính.</p></div><div class="card"><span class="tag green">AI</span><h3 style="margin-top:13px">Tự động có giới hạn</h3><p>Claude đọc tin, tạo đơn nháp, trả lời FAQ có nguồn. Khi có rủi ro hoặc thiếu thông tin, AI chuyển cho Sales.</p></div></div>
-<div class="note"><b>Trạng thái hiện tại:</b> OA Label Vietmax đã xác thực. <b>Chưa xác nhận:</b> gói OA, quyền OpenAPI/GMF và đồng bộ hai chiều từ OA Manager. Tuần 1–2 sẽ kiểm chứng trước khi đầu tư sâu vào Inbox.</div></section>
+<div class="note"><b>Giả định dùng để lập ngân sách:</b> bắt đầu từ số 0 — chưa có ChatGPT Plus, Claude Pro, Zalo OA, gói OA hoặc GMF. Phải <b>tạo và xác thực OA trước khi mua gói Tăng trưởng</b>; sau đó mới kiểm tra quyền OpenAPI/GMF và đồng bộ hai chiều. Đây là <b>kịch bản tài chính giả định</b>, không phải xác nhận về tài khoản thực tế của LBVM.</div></section>
 <section class="section" id="logic"><p class="kicker">02 / LOGIC TỔNG THỂ</p><h2>Một trung tâm dữ liệu, ba bộ phận phối hợp</h2><p class="desc">Zalo cung cấp tin nhắn. Backend lưu và kiểm tra. Claude phân tích. Web App cho người chịu trách nhiệm quyết định.</p>
 <div class="flow"><div class="step"><p class="kicker">01 · NGUỒN</p><h3>Zalo OA / GMF</h3><p>Tin khách, file thiết kế, thông số và yêu cầu sửa đơn.</p></div><div class="arr">→</div><div class="step mainstep"><p class="kicker">02 · TRUNG TÂM</p><h3>Cloudflare + Claude</h3><p>Lưu tin → gom nhiều tin → phân loại → đối chiếu kiến thức & đơn cũ → điều phối.</p></div><div class="arr">→</div><div class="step"><p class="kicker">03 · ĐẦU RA</p><h3>Web App + Zalo</h3><p>Chat, đơn nháp, duyệt, sản xuất, ticket Sales, trả lời khách.</p></div></div>
 <div class="grid2" style="margin-top:16px"><div class="card soft"><h3>AI tự làm</h3><div class="list"><div><span class="ck">✓</span>Gom 5–10 tin thành một yêu cầu.</div><div><span class="ck">✓</span>Đọc số lượng, chất liệu, kích thước, gia công.</div><div><span class="ck">✓</span>Tìm thông tin thiếu, tạo đơn nháp.</div><div><span class="ck">✓</span>Trả lời FAQ đã duyệt và tạo ticket khi cần.</div></div></div><div class="card"><h3>Con người quyết định</h3><div class="list"><div><span class="ck">1</span>Sales xác minh yêu cầu không rõ.</div><div><span class="ck">2</span>Quản lý duyệt đơn và thay đổi đơn.</div><div><span class="ck">3</span>Khách duyệt mẫu trước sản xuất theo quy trình.</div><div><span class="ck">4</span>Quản lý duyệt kiến thức AI mới.</div></div></div></div>
@@ -79,10 +79,10 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-
 <div class="mini-inbox"><div class="minihead"><span>● ● ● &nbsp; LBVM Sales Inbox</span><span class="tag green">DEMO BỐ CỤC</span></div><div class="inbox-columns"><div class="pane"><div class="paneltitle">Hội thoại</div><div class="conversation active"><b>Nhóm ABC</b><br>5 tin · đơn nháp</div><div class="conversation"><b>Nhóm XYZ</b><br>Sales đang xử lý</div><div class="conversation"><b>Nhóm DEF</b><br>Chờ tư vấn</div></div><div class="pane"><div class="paneltitle">Chat khách ABC</div><div class="message">Em đặt lại tem 50.000 cái.</div><div class="message">Kích thước 50 × 30, đổi decal nhựa.</div><div class="message out"><b>AI gợi ý:</b> Đã ghi nhận, chờ file thiết kế mới để xác minh thông số.</div><div class="message" style="color:#7e9485;background:white;border:1px solid var(--border)">Soạn tin gửi qua OA API...</div></div><div class="pane"><div class="paneltitle">Đơn hàng</div><div class="field"><b>Trạng thái</b>Chờ file thiết kế</div><div class="field"><b>Số lượng</b>50.000 tem</div><div class="field"><b>Vật liệu</b>Decal nhựa</div><div class="field"><b>AI</b>Đang chờ Sales</div></div></div></div>
 <div class="note warn"><b>Lưu ý:</b> Giao diện giống Pancake không có nghĩa đã đồng bộ hai chiều. Cần test khách → Inbox, Inbox → GMF, và tin Sales gửi trong OA Manager → Inbox. Nếu một chiều không ổn định thì chuyển sang chế độ dự phòng B hoặc C.</div>
 </section>
-<section class="section" id="timeline"><p class="kicker">05 / TIMELINE 8 TUẦN</p><h2>Mỗi tuần có đầu ra rõ ràng</h2><p class="desc">Tuần 1 không phải huấn luyện AI ngay. Ưu tiên chứng minh kết nối Zalo đủ ổn định để không phải làm lại Inbox.</p>
+<section class="section" id="timeline"><p class="kicker">05 / TIMELINE 8 TUẦN</p><h2>Mỗi tuần có đầu ra rõ ràng</h2><p class="desc">Từ số 0 cần thêm bước tạo tài khoản, xác thực OA và liên kết ZBS. Zalo nêu thời gian xét duyệt thông thường 2–3 ngày làm việc, có thể lâu hơn. Nếu chưa được duyệt hoặc chưa đủ quyền ở cuối tuần 2, tiếp tục dựng Web App và lùi điểm chốt A/B/C đến khi có pilot thật.</p>
 <div class="timeline">
-<div class="week"><small>TUẦN 01</small><h3>Kiểm tra OA + dựng nền</h3><p>Gói GMF/OpenAPI, tạo Web App mẫu, Worker, D1, lưu tin và webhook.</p><span class="result">Đầu ra: test nhận tin/ghi blocker</span></div>
-<div class="week special"><small>TUẦN 02 · GATE</small><h3>Test đồng bộ thật</h3><p>Nhận/gửi GMF, file, tin trùng, OA Manager, lỗi token và API.</p><span class="result">Đầu ra: chốt A / B / C</span></div>
+<div class="week"><small>TUẦN 01</small><h3>Tạo tài khoản & chuẩn bị</h3><p>Tạo ChatGPT, Claude, GitHub/Cloudflare, Zalo OA, chuẩn bị hồ sơ xác thực, liên kết ZBS; dựng Web App mẫu và database.</p><span class="result">Đầu ra: tài khoản sẵn sàng / hồ sơ OA đang duyệt</span></div>
+<div class="week special"><small>TUẦN 02 · GATE</small><h3>Mua gói & thử kết nối</h3><p>Sau khi OA xác thực: mua Tăng trưởng 6/12 tháng, tạo GMF trong gói, cấp API; thử nhận/gửi và file.</p><span class="result">Đầu ra: chốt A / B / C nếu quyền đã sẵn</span></div>
 <div class="week"><small>TUẦN 03</small><h3>AI tạo đơn nháp</h3><p>Claude trích xuất thông số, gom nhiều tin, phát hiện đơn thiếu.</p><span class="result">Đầu ra: đơn nháp có lịch sử</span></div>
 <div class="week"><small>TUẦN 04</small><h3>Duyệt đơn hai kênh</h3><p>Duyệt qua GMF nội bộ hoặc Web App cùng cơ chế phân quyền.</p><span class="result">Đầu ra: không duyệt trùng</span></div>
 <div class="week"><small>TUẦN 05</small><h3>Thiết kế / sản xuất</h3><p>Thiết kế, khách duyệt mẫu, sản xuất, QC, cập nhật giao hàng.</p><span class="result">Đầu ra: theo dõi từng công đoạn</span></div>
@@ -92,31 +92,65 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-
 </div>
 <div class="grid2" style="margin-top:16px"><div class="card"><h3>Phải có trong V1</h3><div class="list"><div><span class="ck">✓</span>Gom nhiều tin, xử lý tin/file đến muộn.</div><div><span class="ck">✓</span>Kiểm tra đơn đủ thông số mới được trình duyệt.</div><div><span class="ck">✓</span>Giám sát lỗi API, webhook, gửi tin và file.</div></div></div><div class="card"><h3>Để giai đoạn nâng cấp V2</h3><p>Hiểu nhiều chủ đề phức tạp trong một nhóm, SLA Sales nâng cao, phân loại rủi ro sâu, kho kỹ thuật hai lớp, tối ưu chi phí AI nâng cao và dashboard chất lượng chi tiết.</p></div></div>
 </section>
-<section class="section" id="chiphi"><p class="kicker">06 / NGÂN SÁCH THEO GIAI ĐOẠN</p><h2>Thử nhỏ trước — chỉ mở rộng khi đã kiểm chứng</h2><p class="desc">Mốc ngân sách PA2 từ kế hoạch ban đầu: <b>2,34–3,09 triệu đồng/tháng</b> khi dùng giả định 33 nhóm GMF-10. Đây là dự toán vận hành, không phải tiền phải trả ngay ở tuần đầu.</p>
-<div class="costhero"><div class="card dark"><span class="tag" style="background:#2a6b54;color:white;align-self:flex-start">PA2 · ĐANG CHỌN</span><p style="margin:12px 0 5px;font-size:12px">KHI VẬN HÀNH ĐỦ QUY MÔ</p><div class="money">2,34–3,09 triệu <span style="font-size:16px">đ/tháng</span></div><p>Đã gồm ChatGPT Plus, Claude Pro, OA/GMF theo giả định, Claude API và hạ tầng.</p></div><div class="card"><h3>Phải trả những gì từ tuần 1?</h3><p>Ưu tiên dùng quyền OA/GMF đang có, một nhóm test và Cloudflare thử nghiệm. <b>Chưa chốt được tiền trả thêm</b> vì chưa biết gói OA hiện tại, quyền API hoặc tài nguyên đã sử dụng.</p><span class="tag amber" style="align-self:flex-start">Chưa cần mua đủ 33 nhóm</span></div></div>
-<div class="coststages"><div class="card"><p class="kicker">GIAI ĐOẠN 1 · TUẦN 1–2</p><h3>Kiểm chứng kết nối</h3><p>1 nhóm GMF test, backend thử, chưa gửi AI đại trà. Phí tăng thêm có thể thấp nếu dùng quyền sẵn có, nhưng phải xác minh trước.</p></div><div class="card"><p class="kicker">GIAI ĐOẠN 2 · TUẦN 3–8</p><h3>Phát triển V1</h3><p>Hai thuê bao công cụ (nếu tiếp tục duy trì), Claude API theo sử dụng, Cloudflare và số nhóm triển khai thực tế. Tiền công lập trình tính riêng.</p></div><div class="card"><p class="kicker">GIAI ĐOẠN 3 · SAU V1</p><h3>Vận hành & mở rộng</h3><p>Giả định 33 nhóm GMF-10, Claude CSKH, lưu trữ, giám sát. Tổng nền PA2 2,34–3,09 triệu/tháng; phải đo phí thực tế.</p></div></div>
-<div class="card" style="margin-top:15px">
-<h3>Minh họa chi phí từng mức mở rộng</h3>
-<p style="font-size:12px;color:var(--muted)">Đây là <b>kịch bản quy đổi PA2 theo tháng</b>, giả định thuê bao cá nhân, gói OA và ngân sách API/hosting đều được duy trì. Số tiền thực trả giai đoạn đầu có thể thấp hơn nếu LBVM đã có thuê bao/gói OA hoặc dùng thử tài nguyên.</p>
-<div class="tablebox"><table><thead><tr><th>Quy mô & giai đoạn tham khảo</th><th>Điều kiện tính</th><th>Tổng / tháng</th></tr></thead><tbody>
-<tr><td><b>Pilot · 1 nhóm</b></td><td>OA có 1 nhóm GMF-10 trong gói giả định</td><td><b>1,54–2,29 triệu</b></td></tr>
-<tr><td><b>Mở rộng · 10 nhóm</b></td><td>1 nhóm trong gói + 9 nhóm mua thêm</td><td><b>1,77–2,52 triệu</b></td></tr>
-<tr class="totalrow"><td><b>Đầy đủ · 33 nhóm</b></td><td>1 nhóm trong gói + 32 nhóm mua thêm</td><td><b>2,34–3,09 triệu</b></td></tr>
-</tbody></table></div>
-<p style="font-size:12px;color:var(--muted);margin:12px 0 0"><b>Nếu duy trì đủ 33 nhóm suốt 12 tháng:</b> khoảng <b>28,08–37,08 triệu đồng/năm</b> tiền vận hành. Nếu thuê ngoài phát triển PA2 một lần 25–60 triệu, tổng mô hình năm đầu sẽ là <b>53,08–97,08 triệu</b> (chưa gồm khoản ngoài phạm vi). Nếu tăng nhóm từ ít đến nhiều theo timeline, tổng thực tế sẽ khác phép tính đủ 33 nhóm suốt năm.</p>
+<section class="section" id="chiphi">
+<p class="kicker">06 / NGÂN SÁCH · BẮT ĐẦU TỪ SỐ 0</p>
+<h2>Mua gì từ tuần 1, trả bao nhiêu và khi nào?</h2>
+<p class="desc">Kịch bản này giả định LBVM chưa có tài khoản ChatGPT, Claude, Zalo OA, ZBS và chưa mua nhóm GMF. Cần phân biệt <b>tiền thanh toán ngay</b> với <b>chi phí bình quân/tháng</b>. Giữ PA2 làm hướng phát triển.</p>
+<div class="costhero">
+<div class="card dark"><span class="tag" style="background:#2a6b54;color:white;align-self:flex-start">GIAI ĐOẠN 1 · TUẦN 1–2</span><p style="margin:12px 0 5px;font-size:12px">TIỀN THANH TOÁN ĐỂ KHỞI ĐỘNG</p><div class="money">2.432.000đ</div><p>Mua ChatGPT Plus + Claude Pro mỗi gói 1 tháng và Zalo OA Tăng trưởng 6 tháng. Giả định 1 GMF thử đã nằm trong gói, Cloudflare Free và chưa gọi Claude API.</p></div>
+<div class="card"><span class="tag amber" style="align-self:flex-start">NẾU MUA OA 12 THÁNG</span><h3 style="margin-top:13px">3.532.000đ ban đầu</h3><p>Khác biệt nằm ở khoản OA phải thanh toán trước: <b>2,5 triệu/năm</b> thay vì <b>1,4 triệu/6 tháng</b>. Gói OA chỉ mua sau khi được xác thực và liên kết ZBS.</p><p>Hai thuê bao AI đều là công cụ cho người phát triển; <b>Claude Pro không bao gồm Claude API</b>.</p></div>
 </div>
-<h3 style="margin-top:26px">Bóc tách dự toán PA2</h3><div class="tablebox"><table><thead><tr><th>Hạng mục</th><th>Ý nghĩa</th><th>Bình quân / tháng</th></tr></thead><tbody>
-<tr><td>ChatGPT Plus</td><td>Hỗ trợ người phát triển; không bao gồm API</td><td>~516.000đ</td></tr>
-<tr><td>Claude Pro</td><td>Thuê bao cá nhân hỗ trợ làm việc</td><td>~516.000đ</td></tr>
-<tr><td>Zalo OA + GMF</td><td>Giả định gói Tăng trưởng và 33 nhóm GMF-10</td><td>~1.008.000đ</td></tr>
-<tr><td>Claude API</td><td>AI tích hợp trong phần mềm, trả theo dùng</td><td>120.000–500.000đ</td></tr>
-<tr><td>Cloudflare / DB / file</td><td>Hạ tầng, giám sát và dữ liệu</td><td>180.000–550.000đ</td></tr>
-<tr class="totalrow"><td><b>TỔNG PA2</b></td><td>Vận hành đủ 33 nhóm theo giả định</td><td>2.340.000–3.090.000đ</td></tr>
+<h3 style="margin-top:25px">Bóc tách từng khoản ngay từ đầu</h3>
+<div class="tablebox"><table>
+<thead><tr><th>Hạng mục</th><th>Thời điểm</th><th>Số tiền phải chuẩn bị</th></tr></thead><tbody>
+<tr><td><b>Tạo ChatGPT</b></td><td>Ngày 1; tài khoản Free có thể dùng để đăng ký</td><td>0đ tạo tài khoản</td></tr>
+<tr><td><b>Nâng ChatGPT Plus</b></td><td>Ngày 1 nếu chọn dùng gói trả phí</td><td>~516.000đ/tháng</td></tr>
+<tr><td><b>Tạo Claude</b></td><td>Ngày 1, đăng ký tài khoản</td><td>0đ tạo tài khoản</td></tr>
+<tr><td><b>Nâng Claude Pro</b></td><td>Ngày 1 nếu chọn sử dụng thêm</td><td>~516.000đ/tháng</td></tr>
+<tr><td><b>Đăng ký và xác thực Zalo OA</b></td><td>Tuần 1, chuẩn bị giấy tờ doanh nghiệp</td><td>Gói Cơ bản 0đ; không dự trù phí dịch vụ xác thực bên ngoài</td></tr>
+<tr><td><b>Liên kết ZBS và mua OA Tăng trưởng</b></td><td>Sau khi OA xác thực, dự kiến tuần 1–2</td><td><b>1.400.000đ/6 tháng</b> hoặc <b>2.500.000đ/12 tháng</b></td></tr>
+<tr><td><b>1 nhóm GMF để thử</b></td><td>Sau khi có gói và quyền GMF</td><td>0đ thêm nếu dùng 1 nhóm GMF-100 có sẵn trong gói Tăng trưởng</td></tr>
+<tr><td><b>GitHub / Cloudflare Free</b></td><td>Tuần 1, tạo dự án và backend thử</td><td>0đ trong hạn mức; tên miền workers.dev dùng thử</td></tr>
+<tr><td><b>Claude API</b></td><td>Chưa bật ở tuần 1–2</td><td>0đ nếu chưa gọi; thanh toán riêng khi bắt đầu test</td></tr>
+<tr class="totalrow"><td><b>TỔNG MUA MỚI · LỰA CHỌN 6 THÁNG</b></td><td>Giai đoạn 1, sau khi OA được duyệt</td><td><b>2.432.000đ</b></td></tr>
+<tr><td><b>TỔNG MUA MỚI · LỰA CHỌN 12 THÁNG</b></td><td>Giai đoạn 1, sau khi OA được duyệt</td><td><b>3.532.000đ</b></td></tr>
 </tbody></table></div>
-<p style="font-size:12px;color:var(--muted);margin:10px 0 19px">Giả định từ kế hoạch trước: tỷ giá 25.798,5 VNĐ/USD, OA Tăng trưởng 2,5 triệu/năm kèm 1 nhóm, 25.000đ/nhóm GMF-10 mua thêm/tháng. <b>Chưa xác minh giá áp dụng trên OA Label Vietmax</b>; OA có thể phải trả theo kỳ, không phải từng tháng. Chưa gồm thuế, phí tin nhắn nhóm mua thêm theo chính sách hiện hành, chi phí nhân sự, chi phí vượt hạn mức, V2 hoặc triển khai nhiều nhóm lớn hơn GMF-10.</p>
-<div class="grid2"><div class="calculator"><h3>Thử thay đổi số nhóm</h3><p style="font-size:12px;color:var(--muted)">Công thức dự toán PA2, không phải báo giá Zalo.</p><div class="calcinput"><label for="cust">Nhóm khách</label><input type="number" id="cust" value="30" min="0" max="300"></div><div class="calcinput"><label for="internal">Nhóm nội bộ</label><input type="number" id="internal" value="3" min="0" max="50"></div><div class="calcoutput"><span><b id="groupcount">33 nhóm</b><br><span style="color:var(--muted);font-size:11px">Dự toán / tháng</span></span><strong id="estimate">2,34–3,09 triệu</strong></div></div>
-<div class="card"><h3>So sánh ba phương án</h3><div class="list"><div><span class="ck">1</span><span><b>PA1 tiết kiệm:</b> 2,165–2,465 triệu/tháng.</span></div><div><span class="ck">2</span><span><b>PA2 cân bằng:</b> 2,340–3,090 triệu/tháng — đang chọn.</span></div><div><span class="ck">3</span><span><b>PA3 nâng cao:</b> 3,332–5,382 triệu/tháng.</span></div></div><p style="margin-top:16px">Nếu thuê ngoài xây dựng một lần, mức dự trù từ kế hoạch cũ: PA1 10–25 triệu, PA2 25–60 triệu, PA3 70–150 triệu. <b>Chưa có báo giá</b>; giao diện Inbox hoàn thiện như Pancake có thể tăng công sức lập trình.</p></div></div>
-<div class="note warn"><b>Nguyên tắc ngân sách:</b> Không dùng ước tính ~3 triệu/tháng để cam kết toàn bộ phí vận hành và xây dựng. Phải kiểm tra gói OA đang có, phí GMF mua thêm, tiền tin nhắn, số lượt gọi Claude và độ ổn định trước khi chốt.</div>
+<p style="font-size:12px;color:var(--muted);margin:12px 0 0">Tỷ giá dự toán 25.798,5đ/USD nên làm tròn một thuê bao 20 USD thành ~516.000đ. Các gói quốc tế có thể phát sinh thuế hoặc chênh lệch thanh toán. Zalo OA cần nạp/chi tiền qua ZBS; tài khoản OA mới phải qua bước xác thực trước khi mua gói. Gói Tăng trưởng chính thức bao gồm <b>1 GMF-100</b>, không phải mặc định GMF-10; các nhóm nhỏ bổ sung có thể chọn GMF-10 theo nhu cầu.</p>
+<div class="coststages" style="margin-top:22px">
+<div class="card"><p class="kicker">GIAI ĐOẠN 1 · TUẦN 1–2</p><h3>Khởi động từ số 0</h3><p>Tạo tài khoản, đăng ký/xác thực OA, liên kết ZBS, mua gói khi đủ điều kiện; dựng code và 1 nhóm GMF test.</p><p><b>Thanh toán lần đầu:</b> 2,432 triệu (OA 6 tháng) hoặc 3,532 triệu (OA 12 tháng), nếu dùng cả hai gói AI trả phí.</p></div>
+<div class="card"><p class="kicker">GIAI ĐOẠN 2 · TUẦN 3–8</p><h3>Lập trình và chạy thử</h3><p>Tiếp tục thuê bao theo kỳ, gọi Claude API khi có module AI, dùng Cloudflare theo nhu cầu. Chỉ mua thêm GMF nếu pilot và kế hoạch chuyển đổi cần.</p><p><b>Dự phòng test:</b> Claude API 120–500 nghìn và hạ tầng 0–550 nghìn (giả định 1 kỳ thử có tính phí).</p></div>
+<div class="card"><p class="kicker">GIAI ĐOẠN 3 · SAU TUẦN 8</p><h3>Vận hành mở rộng</h3><p>Mua thêm nhóm khi khách chuyển sang GMF; đo tin gửi OA, Claude API và hạ tầng. Nếu dùng đủ 33 nhóm theo giả định cũ:</p><p><b>2,34–3,09 triệu/tháng</b> bao gồm hai thuê bao AI; chưa gồm các phát sinh ngoài giả định.</p></div>
+</div>
+<div class="card" style="margin-top:16px">
+<h3>Ngân sách cộng dồn từ tuần 1 đến hết tuần 8</h3>
+<p style="font-size:13px;color:var(--muted)">Mô hình <b>2 kỳ thanh toán ChatGPT/Claude</b>, <b>một gói OA trả trước</b>, <b>1 nhóm GMF có sẵn</b>; chỉ dự trù 1 kỳ AI API (120–500 nghìn) và hạ tầng test (0–550 nghìn) trong 8 tuần. Không tính mở thêm nhóm, thuê ngoài, chi phí nhân sự hoặc phí phát sinh.</p>
+<div class="tablebox"><table><thead><tr><th>Khoản 8 tuần</th><th>OA 6 tháng</th><th>OA 12 tháng</th></tr></thead><tbody>
+<tr><td>ChatGPT Plus + Claude Pro (2 tháng)</td><td>2.064.000đ</td><td>2.064.000đ</td></tr>
+<tr><td>OA Tăng trưởng thanh toán một lần</td><td>1.400.000đ</td><td>2.500.000đ</td></tr>
+<tr><td>Claude API test (dự phòng)</td><td>120.000–500.000đ</td><td>120.000–500.000đ</td></tr>
+<tr><td>Cloudflare test (dự phòng)</td><td>0–550.000đ</td><td>0–550.000đ</td></tr>
+<tr class="totalrow"><td><b>TỔNG DÒNG TIỀN 8 TUẦN</b></td><td><b>3,584–4,514 triệu</b></td><td><b>4,684–5,614 triệu</b></td></tr>
+</tbody></table></div>
+<p style="font-size:12px;color:var(--muted);margin:11px 0 0">Nếu dùng Claude Pro Free trong tháng đầu hoặc không đăng ký Claude Pro, trừ phần phí không mua. Nếu OA xét duyệt chậm, ngày thanh toán OA và mốc pilot phải lùi theo thực tế; ngân sách 8 tuần trên là giả định sẵn sàng mua gói trong giai đoạn 1. Nếu phát triển bằng nhân sự nội bộ, vẫn cần tính thời gian công việc như một chi phí nguồn lực.</p>
+</div>
+<div class="grid2" style="margin-top:17px">
+<div class="calculator">
+<h3>Tính thử tiền khởi động và chi phí theo số nhóm</h3>
+<p style="font-size:12px;color:var(--muted)">Thay đổi lựa chọn để xem tiền mua mới ngay từ tuần 1, ngân sách thử nghiệm 8 tuần và chi phí bình quân khi vận hành. Giá và tỷ giá vẫn chỉ là dự toán.</p>
+<div class="calcinput"><label for="oaTerm">Gói OA Tăng trưởng</label><select id="oaTerm" style="padding:8px;border:1px solid #c8d9cb;border-radius:9px"><option value="6">6 tháng · 1.400.000đ</option><option value="12">12 tháng · 2.500.000đ</option></select></div>
+<div class="calcinput"><label for="usePro">Dùng Claude Pro?</label><input type="checkbox" id="usePro" checked style="width:19px;height:19px"></div>
+<div class="calcinput"><label for="cust">Nhóm khách</label><input type="number" id="cust" value="30" min="0" max="300"></div>
+<div class="calcinput"><label for="internal">Nhóm nội bộ</label><input type="number" id="internal" value="3" min="0" max="50"></div>
+<div class="calcoutput"><span>Phải chuẩn bị lúc khởi động</span><strong id="startupCost">2.432.000đ</strong></div>
+<div class="calcoutput"><span>8 tuần đầu, 1 nhóm thử</span><strong id="eightWeek">3,58–4,51 triệu</strong></div>
+<div class="calcoutput"><span><b id="groupcount">33 nhóm</b><br>Vận hành bình quân/tháng</span><strong id="estimate">2,34–3,09 triệu</strong></div>
+</div>
+<div class="card"><h3>Chi phí đủ quy mô PA2</h3><p>Đây là <b>chi phí phân bổ theo tháng</b>, không phải số tiền thanh toán lần đầu. Dự toán gói OA khi dùng 33 nhóm: một GMF-100 nằm trong Tăng trưởng, 32 GMF-10 mua thêm theo giả định.</p>
+<div class="list"><div><span class="ck">✓</span>ChatGPT Plus ~516.000đ/tháng</div><div><span class="ck">✓</span>Claude Pro ~516.000đ/tháng (tùy chọn)</div><div><span class="ck">✓</span>Gói OA Tăng trưởng: 208.333đ/tháng (12 tháng) hoặc 233.333đ/tháng (6 tháng)</div><div><span class="ck">✓</span>GMF-10 thêm: 25.000đ/nhóm/tháng</div><div><span class="ck">✓</span>Claude API: dự phòng 120–500 nghìn/tháng</div><div><span class="ck">✓</span>Cloudflare: dự phòng 180–550 nghìn/tháng khi mở rộng</div></div>
+<p style="margin-top:15px">Nếu giữ <b>cả ChatGPT Plus và Claude Pro</b> và mua OA 12 tháng, 33 nhóm tương ứng khoảng <b>2,34–3,09 triệu/tháng</b>. Nếu không cần Claude Pro, mức này giảm khoảng 516 nghìn/tháng. Dự toán gốc cần đo lại sau pilot.</p>
+</div></div>
+<div class="note warn"><b>Quan trọng:</b> Bảng giá Zalo công bố GMF gửi từ OA vào nhóm đang <b>miễn phí đến 31/12/2026</b> với nhóm mua thêm; sau thời điểm đó chưa có cơ sở chốt mức phí. Chi phí gửi tin nhóm mua thêm từ 2027, thuế/phí quốc tế, vượt hạn mức, tên miền riêng và xây dựng Unified Inbox thuê ngoài <b>chưa nằm trong dự toán 8 tuần</b>. Giá gói Zalo và GMF ghi theo bảng Zalo công bố hiệu lực 01/06/2026; cần kiểm tra lại trước khi thanh toán.</div>
+<p style="font-size:12px;color:var(--muted);margin-top:12px">Nguồn kiểm chứng: <a href="https://zalo.solutions/oa/pricing" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Bảng giá Zalo OA/GMF</a> · <a href="https://oa.zalo.me/home/documents/vie/guides/ho-so-xac-thuc_74" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Hồ sơ và xét duyệt OA</a> · <a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus" target="_blank" rel="noopener noreferrer" style="color:var(--green)">ChatGPT Plus</a> · <a href="https://support.claude.com/en/articles/8325606-what-is-the-pro-plan" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Claude Pro và API</a>.</p>
 </section>
 <section class="section" id="duphong"><p class="kicker">07 / NẾU ZALO KHÔNG ĐỒNG BỘ ĐƯỢC</p><h2>Ba phương án để dự án không bị dừng</h2><p class="desc">Cuối tuần 2 chọn phương án theo kết quả test, không chờ hoàn thiện cả phần mềm mới phát hiện thiếu quyền Zalo.</p>
 <div class="scenarios"><div class="scenario best"><small>A · MỤC TIÊU</small><h3>Đồng bộ hai chiều</h3><p>Nhận tin từ GMF vào Web App, Sales/Claude trả lời qua OA API. Sales ưu tiên dùng Inbox LBVM; Zalo vẫn là kênh của khách.</p></div><div class="scenario"><small>B · ĐỒNG BỘ MỘT PHẦN</small><h3>Sales chat ở OA Manager</h3><p>LBVM vẫn quản lý đơn, ticket, Training và dữ liệu nhận được. Tắt phần gửi tự động không đáng tin cậy.</p></div><div class="scenario"><small>C · KHÔNG ĐỒNG BỘ</small><h3>Nhập dữ liệu thủ công</h3><p>Sales làm việc trên Zalo và chuyển yêu cầu vào LBVM; Claude hỗ trợ tạo nháp, Sales tự gửi câu trả lời. Không dùng Zalo cá nhân API không chính thức.</p></div></div>
@@ -135,6 +169,20 @@ footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--border);font-
 </footer>
 </main></div>
 <script>
-(function(){var a=document.getElementById("cust"),b=document.getElementById("internal"),label=document.getElementById("groupcount"),out=document.getElementById("estimate");function fmt(v){return(v/1e6).toLocaleString("vi-VN",{minimumFractionDigits:2,maximumFractionDigits:2})}function run(){var x=Math.max(0,Math.min(300,Math.floor(Number(a.value)||0))),y=Math.max(0,Math.min(50,Math.floor(Number(b.value)||0))),n=x+y,oa=2500000/12+25000*Math.max(0,n-1);label.textContent=n+" nhóm";out.textContent=fmt(1032000+oa+120000+180000)+"–"+fmt(1032000+oa+500000+550000)+" triệu"}a.addEventListener("input",run);b.addEventListener("input",run);run()})();
+(function(){
+var a=document.getElementById("cust"),b=document.getElementById("internal"),term=document.getElementById("oaTerm"),pro=document.getElementById("usePro"),label=document.getElementById("groupcount"),out=document.getElementById("estimate"),initial=document.getElementById("startupCost"),weeks=document.getElementById("eightWeek");
+function m(v){return (v/1000000).toLocaleString("vi-VN",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function money(v){return Math.round(v).toLocaleString("vi-VN")+"đ"}
+function run(){
+ var x=Math.max(0,Math.min(300,Math.trunc(Number(a.value)||0))),y=Math.max(0,Math.min(50,Math.trunc(Number(b.value)||0))),n=x+y;
+ var oaPrice=term.value==="6"?1400000:2500000,oaMonths=term.value==="6"?6:12,perMonth=oaPrice/oaMonths+25000*Math.max(0,n-1);
+ var subs=516000+(pro.checked?516000:0);
+ initial.textContent=money(subs+oaPrice);
+ weeks.textContent=m(2*subs+oaPrice+120000)+"–"+m(2*subs+oaPrice+500000+550000)+" triệu";
+ label.textContent=n+" nhóm";
+ out.textContent=m(subs+perMonth+120000+180000)+"–"+m(subs+perMonth+500000+550000)+" triệu";
+}
+[a,b,term,pro].forEach(function(el){el.addEventListener("input",run);el.addEventListener("change",run)});run();
+})();
 </script>
 </body></html>
