@@ -1,4 +1,4 @@
-# LBVM — LOGIC TỔNG THỂ 3 WORKFLOW (BẢN TRÌNH DUYỆT V2.1)
+# LBVM — LOGIC TỔNG THỂ 3 WORKFLOW (BẢN TRÌNH DUYỆT V2.2)
 
 **Đơn vị:** Label Vietmax (LBVM)  
 **Ngày:** 30/10/2026  
@@ -94,6 +94,26 @@ Cần ít nhất các bảng nghiệp vụ: `customers`, `zalo_groups`, `message
 - **Chuyển đổi:** 1–2 tháng từ nhóm cá nhân sang OA/GMF; nhóm cũ do Sales nhập/chuyển tiếp thủ công trong giai đoạn quá độ.
 - **Mốc triển khai mục tiêu:** 8 tuần; xác minh quyền OA/GMF, webhook, nhận/gửi tin trên nhóm thử **trước** khi nhân rộng. Không cam kết chính xác 100% trước nghiệm thu.
 
+## G. Backlog giai đoạn 2 — Tối ưu AI CSKH (không nằm trong scope 8 tuần V1)
+
+**Quyết định bổ sung V2.2:** Bảy đề xuất tối ưu CSKH được xếp vào giai đoạn sau khi V1 đã vận hành ổn định. Đây là **backlog cần phê duyệt trước khi triển khai**, không phải cam kết xây ngay trong giai đoạn đầu.
+
+| Mã | Hướng tối ưu sau V1 | Mục tiêu |
+|---|---|---|
+| CS2-01 | Ngữ cảnh hội thoại nâng cao | Tách nhiều chủ đề/ticket cùng một nhóm, liên kết đúng khách, sản phẩm và mã đơn |
+| CS2-02 | Khóa AI theo từng vấn đề | Sales tiếp quản từng ticket; các câu hỏi độc lập vẫn có thể được hỗ trợ; tùy chọn tạm dừng cả nhóm |
+| CS2-03 | Phân tầng rủi ro 3 cấp chi tiết | FAQ cơ bản / tư vấn kỹ thuật có điều kiện / cam kết thương mại |
+| CS2-04 | Ticket và SLA cho Sales | Phân công, ghi nhận đã tiếp nhận, nhắc hạn, chuyển cấp và theo dõi đã giải quyết |
+| CS2-05 | Kho kiến thức kỹ thuật hai lớp | FAQ chung + tài liệu sản phẩm, vật liệu, keo và điều kiện sử dụng; kiểm soát phiên bản |
+| CS2-06 | Tối ưu chi phí, tần suất AI/tin GMF | Không gọi LLM khi không cần, lọc tin xã giao, cache FAQ, giới hạn phản hồi |
+| CS2-07 | Dashboard chất lượng & bộ test | Đo độ đúng, tỷ lệ tự xử lý/chuyển Sales, sai ngữ cảnh, chi phí/ticket |
+
+**V1 vẫn bắt buộc có các kiểm soát nền:** xác minh nhóm và quyền xem đơn, chống trùng tin, dữ liệu/kiến thức đã được duyệt, không tự cam kết thương mại, Sales takeover tối thiểu theo ticket, lưu lịch sử và cơ chế dừng AI. Không hoãn những yêu cầu an toàn này sang V2.
+
+**Điều kiện mở V2:** V1 nghiệm thu và đã sử dụng với nhóm GMF thực tế; thu được câu hỏi mẫu, số lỗi, khối lượng cuộc trao đổi và chi phí; quản lý duyệt ưu tiên, phạm vi, KPI và ngân sách riêng. Chưa cố định thời gian hoặc giá phát triển/nâng cấp V2 do chưa có dữ liệu đo lường.
+
+**Hệ quả ngân sách:** dự toán nền PA2 (2,34–3,09 triệu/tháng theo 33 nhóm GMF-10) không tự động bao gồm chi phí phát triển và vận hành tất cả hạng mục CS2-01…CS2-07.
+
 ## F. Danh sách quản lý cần duyệt
 
 - [ ] **D1 — Kiến trúc:** Đồng ý 3 workflow chạy song song, cùng một bộ điều phối và database.
@@ -103,6 +123,7 @@ Cần ít nhất các bảng nghiệp vụ: `customers`, `zalo_groups`, `message
 - [ ] **D5 — Training:** Mọi kiến thức mới cần quản lý duyệt trước khi xuất bản; không học tự động từ mọi câu Sales.
 - [ ] **D6 — Dữ liệu & quyền:** Phân quyền nhóm khách, lưu nhật ký, giữ phiên bản đơn và chống lặp.
 - [ ] **D7 — Chi phí & lộ trình:** Chấp thuận PA2 làm hướng nền; cập nhật lại ngân sách sau đo thực tế và xác minh chi phí GMF 2027.
+- [ ] **D8 — Giai đoạn sau:** Chấp thuận xếp 7 tối ưu AI CSKH vào backlog V2 sau nghiệm thu V1; chưa cam kết thời hạn/chi phí V2.
 
 **Tình trạng duyệt:** Chưa có phê duyệt chính thức. Các ô trên dành cho người quản lý xác nhận.  
 **Ranh giới phạm vi:** Đây là bản logic/phân tích, chưa phải ứng dụng đã được tích hợp hay thử nghiệm với Zalo OA của LBVM.
