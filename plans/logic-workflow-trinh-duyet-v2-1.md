@@ -1,4 +1,4 @@
-# LBVM — LOGIC TỔNG THỂ 3 WORKFLOW (BẢN TRÌNH DUYỆT V2.3)
+# LBVM — LOGIC TỔNG THỂ 3 WORKFLOW (BẢN TRÌNH DUYỆT V2.5)
 
 **Đơn vị:** Label Vietmax (LBVM)  
 **Ngày:** 30/10/2026  
@@ -145,6 +145,49 @@ Cần ít nhất các bảng nghiệp vụ: `customers`, `zalo_groups`, `message
 
 **Hệ quả ngân sách:** dự toán nền PA2 (2,34–3,09 triệu/tháng theo 33 nhóm GMF-10) không tự động bao gồm chi phí phát triển và vận hành tất cả hạng mục CS2-01…CS2-07.
 
+## H. LBVM Unified Inbox + kế hoạch dự phòng khi OA/GMF không đồng bộ (đã chốt hướng V1)
+
+**Chính thức chọn hướng thiết kế:** Xây một giao diện **LBVM Unified Inbox kiểu Pancake** ngay trong Web App, cùng màn hình hội thoại, gợi ý Claude, ticket Sales, khách/đơn hàng và Training AI. Zalo OA/GMF vẫn là kênh khách nhắn tin; Claude chạy trên backend qua API; không nhúng Claude vào giao diện OA Manager.
+
+**Điểm kiểm chứng không được bỏ qua:** OA có OpenAPI và webhook chính thức, nhưng **không được giả định** rằng mọi tin từ OA Manager, mọi file và danh tính nhân viên gửi đều đồng bộ đủ với Web App của LBVM. Chỉ xem hai chiều đạt khi chứng minh bằng GMF thật, quyền ứng dụng thật và kịch bản kiểm thử.
+
+### Ba nhánh vận hành
+
+| Chế độ | Điều kiện | Cách làm |
+|---|---|---|
+| **A — Unified Inbox hai chiều** | Nhận tin khách và gửi tin qua Web App ổn định, đúng quyền; các nguồn bổ sung được kiểm chứng hoặc có quy trình sử dụng thống nhất | Sales ưu tiên chat trong Web App; Claude chỉ tự trả lời câu được cấp phép; OA Manager làm kênh dự phòng |
+| **B — Đồng bộ một phần / không ổn định** | Nhận hoặc gửi thiếu một chiều; tin từ OA Manager thiếu; một số webhook/file không đáng tin | Sales chat qua Zalo OA Manager/GMF; Web App xử lý đơn, ticket, AI draft/Training; chặn chức năng gửi không an toàn và yêu cầu Sales kiểm tra dữ liệu thiếu |
+| **C — Không dùng được OA API cho nghiệp vụ cần thiết** | Thiếu quyền, không thể truy cập GMF hoặc đồng bộ thực tế thất bại | Sales chat Zalo, nhập/chuyển tiếp đơn và câu hỏi vào Web App; Claude phân tích và tạo nháp; Sales gửi câu trả lời thủ công. Không dùng thư viện Zalo cá nhân không chính thức để bù. |
+
+### Kiểm thử cuối tuần 1–2 (Gate GO / PARTIAL / FALLBACK)
+
+1. **Khách → Web App:** tin mới vào đúng nhóm, người gửi, thời gian, đủ loại thông điệp cần dùng; thử 5–10 tin liên tiếp.
+2. **Web App → khách GMF:** xác nhận được quyền gửi, đúng nhóm, lưu trạng thái API, không trùng tin.
+3. **OA Manager → Web App:** test câu Sales gửi trong OA Manager có xuất hiện và nhận biết đúng người gửi không; nếu không có, không quảng bá đồng bộ toàn bộ.
+4. **File/tin đến muộn:** ảnh, file thiết kế, sự kiện trùng/đến muộn/đảo thứ tự; giữ trạng thái chờ file nếu chưa tải thành công.
+5. **Lỗi kết nối:** token hết hạn, API lỗi, giới hạn gọi, webhook trễ và thử lại; có banner lỗi, hàng đợi và chuyển sang Sales.
+6. **An toàn:** sai nhóm, sai đơn, gửi trùng, cam kết giá/ngày giao không được duyệt — không được phép xuất hiện khi mở AUTO.
+
+**Quy tắc quyết định:** chỉ bật nhánh A khi các chức năng trọng yếu cần dùng được chứng minh trong pilot; nếu lỗi ảnh hưởng độ tin cậy → dùng B, nếu quyền/tích hợp không khả dụng → dùng C. Không ấn định tỷ lệ thành công Zalo nếu chưa đo. Đến cuối tuần 2 phải ghi nhận nhánh vận hành và các blocker; không chờ xây xong Inbox mới phát hiện API không đáp ứng.
+
+### Runbook khi đồng bộ bị sự cố
+
+1. Tắt gửi AI tự động cho nhóm bị ảnh hưởng và chuyển trạng thái kênh thành `DEGRADED` hoặc `MANUAL`; giữ Web App xử lý đơn/nội bộ.
+2. Sales làm việc trực tiếp trong Zalo OA Manager/GMF; Web App hiển thị cảnh báo, ticket và những dữ liệu còn thiếu; không tự phát lại câu trả lời cũ khi hết lỗi.
+3. Lưu dữ liệu nhận được và trạng thái gửi `QUEUED/SENT/FAILED/UNKNOWN`; chỉ retry có kiểm soát với nội dung còn hiệu lực, có chống trùng.
+4. Khi có lại quyền và kết nối, đối soát theo API thực tế có thể dùng; không khẳng định thu hồi đủ mọi tin. Kiểm thử lại rồi mới bật AUTO.
+5. Mọi phê duyệt đơn và Training AI vẫn ghi trên database LBVM, không bị khóa chỉ vì Zalo lỗi.
+
+### Ảnh hưởng ngân sách và lịch
+
+- **PA2 nền:** 2,34–3,09 triệu/tháng theo kịch bản 33 nhóm GMF-10; đây không phải báo giá cam kết và chưa bao gồm toàn bộ chi phí phát triển Unified Inbox.
+- **Tuần 1:** chứng minh đọc/gửi đúng từ GMF và thử nguồn OA Manager; dựng Inbox mock.
+- **Tuần 2:** chốt A/B/C dựa trên kiểm thử; chỉ phát triển phần gửi chat hoàn chỉnh khi có API đủ.
+- **Tuần 3–8:** giữ 3 workflow và điều phối như kế hoạch, triển khai Inbox tương ứng với nhánh đã được chốt; nếu B/C thì ưu tiên Sales Inbox, đơn, Training thay vì chat hai chiều.
+- **An toàn nguồn:** repository kế hoạch GitHub công khai chỉ chứa tài liệu, không chứa token, thông tin khách hoặc tin nhắn thật.
+
+**Trạng thái:** đã chốt hướng thiết kế Unified Inbox + fallback, nhưng việc chọn nhánh A/B/C thực tế và cam kết thời gian/chi phí cuối cùng phải dựa trên kết quả thử tích hợp.
+
 ## F. Danh sách quản lý cần duyệt
 
 - [ ] **D1 — Kiến trúc:** Đồng ý 3 workflow chạy song song, cùng một bộ điều phối và database.
@@ -156,6 +199,7 @@ Cần ít nhất các bảng nghiệp vụ: `customers`, `zalo_groups`, `message
 - [ ] **D7 — Chi phí & lộ trình:** Chấp thuận PA2 làm hướng nền; cập nhật lại ngân sách sau đo thực tế và xác minh chi phí GMF 2027.
 - [ ] **D8 — Giai đoạn sau:** Chấp thuận xếp 7 tối ưu AI CSKH vào backlog V2 sau nghiệm thu V1; chưa cam kết thời hạn/chi phí V2.
 - [ ] **D9 — Reliability V1:** Bắt buộc có Message Buffer & Aggregator, Order Completeness Validator và Reliability Monitor trong V1; kiểm thử tin nhiều phần, webhook đến muộn, lỗi file/API trước khi triển khai khách thật.
+- [ ] **D10 — Unified Inbox và fallback:** Chọn Unified Inbox kiểu Pancake làm hướng V1; kiểm thử GMF đến hết tuần 2 để chốt nhánh A/B/C; khi đồng bộ lỗi, dừng auto-reply và Sales làm việc trực tiếp trên Zalo.
 
 **Tình trạng duyệt:** Chưa có phê duyệt chính thức. Các ô trên dành cho người quản lý xác nhận.  
 **Ranh giới phạm vi:** Đây là bản logic/phân tích, chưa phải ứng dụng đã được tích hợp hay thử nghiệm với Zalo OA của LBVM.
