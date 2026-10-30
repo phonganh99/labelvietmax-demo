@@ -91,6 +91,48 @@ table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;p
 <div class="card"><h3 class="minihead">Chỉ số cần đo khi nghiệm thu</h3><p class="muted">Tỷ lệ AI phân loại đúng; tỷ lệ câu hỏi được tự xử lý; số câu phải chuyển Sales; tỷ lệ trả lời sai kỹ thuật; trả lời nhầm nhóm/đơn; số tin trùng; thời gian từ lúc có câu hỏi đến khi Sales nhận ticket; chi phí API và tin GMF. Ngưỡng nghiệm thu do LBVM đặt sau khi có mẫu đối chiếu thực tế.</p></div>
 </div><div class="callout"><strong>Cập nhật ngân sách:</strong> mức chi phí PA1–PA3 đang trình bày là dự toán nền. Module AI CSKH làm tăng số lượt gọi Claude API tùy lượng tin khách, mẫu trả lời và số lần kiểm tra. <b>Chưa thể cam kết tính năng CSKH đã nằm trọn trong mức 2,34–3,09 triệu/tháng của PA2</b> cho tới khi đo lưu lượng thực tế.</div>
 </section>
+
+<div class="card" style="margin-top:19px">
+<div class="kicker">BỔ SUNG V1.1 / CHỐT CHẾ ĐỘ A CHỦ ĐỘNG CÓ CHỌN LỌC</div>
+<h3 class="minihead" style="margin-top:10px">Ma trận quyết định trước khi AI gửi tin trong GMF</h3>
+<div class="tablewrap"><table><thead><tr><th>Ý định</th><th>Điều kiện đầu vào</th><th>Kết quả</th></tr></thead><tbody>
+<tr><td>Hỏi FAQ vật liệu / in / gia công</td><td>Ngôn ngữ tự nhiên; rõ ý, kiến thức đã được duyệt, mẫu hợp lệ</td><td>Tự trả lời theo mẫu</td></tr>
+<tr><td>Tra cứu tiến độ hoặc thông số đơn</td><td>Cần lệnh <code>#LBVM TIENDO DH-...</code> / <code>#LBVM THONGSO DH-...</code>, đơn thuộc đúng nhóm</td><td>Trả lời bằng dữ liệu đơn hàng được phép xem</td></tr>
+<tr><td>Tra cứu nhưng thiếu lệnh hoặc sai cú pháp</td><td>Không khớp mẫu lệnh đã xuất bản</td><td>Không tự gửi nội dung; tạo yêu cầu Sales xử lý</td></tr>
+<tr><td>Đơn mới / đơn sửa</td><td>Tin khách được nhận diện là yêu cầu giao dịch</td><td>Đơn nháp, thông báo quản lý duyệt; không tự xác nhận</td></tr>
+<tr><td>Báo giá, giao gấp, thay đổi cam kết</td><td>Không có dữ liệu phê duyệt còn hiệu lực</td><td>Chuyển Sales/Quản lý</td></tr>
+<tr><td>Đang có Sales tiếp quản</td><td>Ticket ở trạng thái HUMAN</td><td>Bot im lặng cho yêu cầu đang xử lý</td></tr>
+<tr><td>Không chắc, tài liệu mâu thuẫn, dữ liệu khách khác</td><td>Thiếu một trong 6 điều kiện bắt buộc</td><td>Không gửi; tạo ticket và log nguyên nhân</td></tr>
+</tbody></table></div>
+<h3 class="minihead" style="margin-top:18px">Sáu điều kiện bắt buộc</h3>
+<ol class="bullets"><li>Ý định thuộc danh sách cho phép tự động.</li><li>Cú pháp đầu vào hợp lệ theo loại yêu cầu (nếu bắt buộc).</li><li>Nguồn tri thức hoặc đơn hàng đã xác thực, không mâu thuẫn.</li><li>Câu trả lời đúng template, đầy đủ trường và trong phạm vi công bố.</li><li>Nhóm và tài khoản được quyền truy cập dữ liệu liên quan.</li><li>Không có Sales đang xử lý, không trùng sự kiện hay tin trả lời.</li></ol>
+<div class="callout"><strong>Quy tắc thực thi:</strong> Claude chỉ phân loại ý định và đề xuất nội dung theo structured output. Backend LBVM xác minh sáu điều kiện và dựng tin nhắn từ template đã duyệt. Không dựa riêng vào điểm tin cậy do AI tự báo; không cho người dùng thay quy tắc bằng tin nhắn hoặc file.</div>
+</div>
+<div class="two" style="margin-top:17px">
+<div class="card"><h3 class="minihead">Chuyển Sales (Human Takeover)</h3>
+<ol class="bullets"><li>Tạo ticket có mã, ID nhóm và tin gốc, loại yêu cầu, lý do chuyển, bản nháp nếu có.</li>
+<li>Gửi thông báo nội bộ cho Sales phụ trách qua GMF nội bộ/Web App; không tự lộ thông tin nội bộ ra nhóm khách.</li>
+<li>Sales nhận ticket; trạng thái chuyển HUMAN, hệ thống hủy/khóa các câu trả lời AI đang chờ cho yêu cầu này.</li>
+<li>Sales phản hồi khách trên GMF hoặc từ Web App nếu API cho phép; hệ thống lưu phản hồi cùng dấu vết.</li>
+<li>Sales đánh dấu hoàn tất; AI chỉ tự hoạt động lại sau khi kiểm tra không còn ticket mở.</li></ol></div>
+<div class="card"><h3 class="minihead">Chống trả lời chen và tự trả lời vòng lặp</h3>
+<ul class="bullets">
+<li>Không xử lý tin do OA/bot gửi; lọc tin hệ thống và trùng webhook.</li>
+<li>Gom tin khách trong cửa sổ thử nghiệm 15–20 giây; huỷ bản nháp cũ khi có yêu cầu mới.</li>
+<li>Không trả lời nếu Sales đã tiếp quản hoặc có tin Sales đang phản hồi cùng yêu cầu.</li>
+<li>Chỉ một phản hồi cuối cho cùng một ý định/tin; thiết lập hạn mức và chống spam theo nhóm.</li>
+<li>Đảm bảo một người phụ trách ticket tại một thời điểm; đặt cơ chế nhắc nếu chưa ai nhận.</li>
+</ul></div></div>
+<div class="card" style="margin-top:17px"><h3 class="minihead">Phiếu tri thức được duyệt — chuẩn nhập liệu cho người đào tạo</h3>
+<table><thead><tr><th>Trường</th><th>Ý nghĩa</th></tr></thead><tbody>
+<tr><td>Mã tri thức &amp; phiên bản</td><td>Ví dụ KB-MATERIAL-001 / V1; lưu lịch sử, ngày hiệu lực và người duyệt</td></tr>
+<tr><td>Câu hỏi mẫu / câu hỏi tương đương</td><td>Các kiểu hỏi tự nhiên được phép khớp vào chủ đề</td></tr>
+<tr><td>Nguồn kiểm chứng</td><td>Tài liệu kỹ thuật, thông số sản phẩm, chính sách nội bộ, người xác nhận</td></tr>
+<tr><td>Mẫu trả lời</td><td>Cấu trúc bắt buộc: trả lời trực tiếp → điều kiện kỹ thuật → thông tin cần bổ sung</td></tr>
+<tr><td>Điều kiện cấm tự gửi</td><td>Không chắc vật liệu, yêu cầu giá cụ thể, cam kết ngày giao, khách khiếu nại</td></tr>
+<tr><td>Trạng thái</td><td>Nháp → chờ duyệt → áp dụng → ngưng hiệu lực; không tự thêm kiến thức từ mọi câu Sales</td></tr>
+</tbody></table></div>
+<div class="callout"><strong>Kiểm thử trước khi mở AUTO:</strong> tách thành ba trạng thái SHADOW (chỉ gợi ý), ASSISTED (Sales duyệt), AUTO-LIMITED (chỉ câu đã duyệt). Chạy test với dữ liệu LBVM và kiểm tra lỗi gửi sai nhóm, sai sản phẩm, thiếu cú pháp, trùng câu trả lời, Sales đang tiếp quản và tin nhiều phần. Đánh giá chính xác trên mẫu thực tế trước khi mở rộng nhóm khách hàng. Ngân sách AI API phải tính lại theo lượng tin CSKH đo được.</div>
 <section id="rui-ro"><div class="section-head"><div><div class="kicker">07 / QUẢN TRỊ RỦI RO</div><h2>Những gì phải xác nhận trước khi vận hành</h2></div></div><div class="two"><div class="card"><h3 class="minihead">Rủi ro chính</h3><ul class="bullets"><li>OA chưa có quyền OpenAPI/GMF hoặc cấu hình webhook chưa đúng.</li><li>Nhóm Zalo cá nhân cũ không tự chuyển thành nhóm GMF; khách cần tham gia nhóm mới.</li><li>AI gộp nhầm hai đơn hoặc bỏ sót yêu cầu sửa đơn.</li><li>Phí tin OA gửi nhóm từ năm 2027 có thể thay đổi tổng ngân sách.</li><li>File thiết kế và dữ liệu khách hàng cần phân quyền, sao lưu và chính sách lưu trữ.</li></ul></div><div class="card"><h3 class="minihead">Biện pháp kiểm soát</h3><ul class="bullets"><li>Chỉ dùng API chính thức, thử đủ quyền trước khi chốt mua.</li><li>Gắn định danh nhóm GMF ↔ khách hàng ↔ Sales phụ trách.</li><li>Quản lý duyệt trên Web App hoặc bằng lệnh chuẩn trong GMF nội bộ, xác minh ID người gửi và phiên bản đơn; AI chỉ soạn đề xuất.</li><li>Lưu event ID và chống gửi/nhận trùng; tạo nhật ký sự kiện.</li><li>Giới hạn quyền đọc đơn và file theo phòng ban; kiểm thử khôi phục dữ liệu.</li></ul></div></div><div class="callout"><strong>Kết luận:</strong> PA2 là lựa chọn đầu tư cân bằng cho LBVM tại quy mô 20–50 đơn/ngày. Ngân sách nền mục tiêu khoảng <strong>3 triệu đồng/tháng</strong> trong giả định 33 nhóm GMF-10; <strong>cần đo thêm lưu lượng AI chăm sóc khách hàng</strong> để cập nhật ngân sách chính thức. Cần quỹ dự phòng và kiểm tra lại giá/kênh Zalo sau 31/12/2026. Không có cơ sở để cam kết 100% ổn định hoặc chính xác khi chưa nghiệm thu với dữ liệu thật.</div></section>
 <section id="nguon"><div class="section-head"><div><div class="kicker">08 / NGUỒN THAM KHẢO</div><h2>Tài liệu và bảng giá chính thức</h2></div></div><div class="card sources"><a href="https://zalo.solutions/oa/pricing" target="_blank" rel="noopener">Zalo Business Solutions — Bảng giá OA &amp; GMF</a><a href="https://oa.zalo.me/home/documents/vie/guides/quan-ly-nhom-gmf_1954166378348758227" target="_blank" rel="noopener">Zalo Official Account — Quản lý nhóm GMF</a><a href="https://developers.zalo.me/docs" target="_blank" rel="noopener">Zalo Developers — OpenAPI và webhook</a><a href="https://learn.chatgpt.com/docs/pricing" target="_blank" rel="noopener">OpenAI — ChatGPT Plus và Codex</a><a href="https://support.claude.com/en/articles/8325606-what-is-the-pro-plan" target="_blank" rel="noopener">Anthropic — Claude Pro, Claude Code, phân biệt thuê bao và API</a><a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener">Anthropic — Claude API Pricing</a><p class="smalltext">Tài liệu lập ngày 30/10/2026. Giá có thể thay đổi; đối chiếu nguồn ngay trước khi mua. Tất cả chi phí và tiến độ dự án là kịch bản kế hoạch, không phải cam kết của Zalo, Anthropic, OpenAI hoặc đơn vị triển khai.</p></div></section>
 </main>
