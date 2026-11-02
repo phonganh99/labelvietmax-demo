@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f8fc">
+<title>LBVM · Demo Bot trong nhóm Zalo</title>
+<meta name="description" content="Bản demo tương tác giao diện khách nhắn Zalo GMF và bot Label Vietmax phản hồi an toàn, dữ liệu hoàn toàn giả lập.">
+<style>
+:root{--blue:#0068ff;--blue2:#e7f1ff;--ink:#1c2d3e;--muted:#738497;--line:#e3eaf2;--bg:#f2f5f9;--white:#fff;--success:#168268;--successbg:#e8f6ee;--warning:#ad7529;--warningbg:#fff5e7;--red:#bd495a;--redbg:#fff1f1;--shadow:0 17px 55px rgba(36,60,106,.10)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);font-size:14px}
+body{background:var(--bg)}
+button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #84b2f7;outline-offset:2px}
+a{color:inherit;text-decoration:none}a:hover{text-decoration:underline}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{letter-spacing:-.035em}
+h1{font-size:26px}h2{font-size:17px}h3{font-size:14px}
+p{line-height:1.55}
+.appbar{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 27px;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brandmark{width:35px;height:35px;background:#164b52;color:#fff;display:grid;place-items:center;border-radius:10px;font-size:12px;letter-spacing:-.06em;font-weight:900}
+.brand b{font-size:15px;letter-spacing:-.04em}.brand b span{color:#168367}.brand small{display:block;color:#91a0aa;font-size:10px;font-weight:700;letter-spacing:.1em}
+.rightbar{display:flex;align-items:center;gap:10px}
+.chip{font-size:10px;font-weight:900;border-radius:9px;padding:7px 9px;background:#fff3df;color:#a06b25;white-space:nowrap}
+.link{font-size:12px;color:#4069a1;font-weight:800;padding:7px 8px}
+.content{max-width:1460px;margin:auto;padding:27px 23px 35px}
+.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.kicker{color:#327cae;text-transform:uppercase;letter-spacing:.17em;font-size:10px;font-weight:900;margin-bottom:8px}
+.intro p{font-size:13px;color:var(--muted);margin-top:6px}
+.demo{display:grid;grid-template-columns:265px minmax(345px,570px) minmax(260px,1fr);align-items:stretch;justify-content:center;gap:18px;min-height:665px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);min-width:0;padding:20px}
+.panel h2{font-size:15px;margin-bottom:8px}
+.panel .note{font-size:12px;color:var(--muted);line-height:1.65}
+.groupselect{display:grid;gap:7px;margin-top:14px}
+.groupbtn{width:100%;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px;text-align:left;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.groupbtn.active{border-color:#82b7f6;background:#f1f7ff}
+.gavatar{height:34px;width:34px;border-radius:10px;display:grid;place-items:center;flex:none;background:#e7f2ff;color:#3374bb;font-size:11px;font-weight:900}
+.groupbtn b{display:block;font-size:12px;line-height:1.3}
+.groupbtn small{font-size:10px;color:#8a9aac}
+.sectiontitle{margin:23px 0 12px;font-size:10px;font-weight:900;letter-spacing:.14em;color:#90a0af}
+.scenarios{display:grid;gap:8px}
+.scenario{border:1px solid #e2eaf4;background:#f8fafc;padding:11px 12px;text-align:left;border-radius:11px;display:flex;gap:9px;align-items:center;font-size:12px;color:#344d66;font-weight:750}
+.scenario b{font-size:15px}
+.scenario:hover{border-color:#9dbceb;background:#f1f7ff}
+.primary{border:0;border-radius:10px;padding:11px 14px;background:var(--blue);color:#fff;font-weight:850;font-size:12px}
+.secondary{border:1px solid #c9d9eb;border-radius:10px;padding:9px 12px;background:#fff;color:#48637f;font-size:12px;font-weight:750}
+.controls{display:flex;gap:7px;flex-wrap:wrap}
+.alert{padding:12px;border:1px solid #f2dfc9;background:#fff7ed;border-radius:11px;font-size:11px;color:#8d662e;line-height:1.6;margin-top:19px}
+.phone{border:6px solid #1d2c44;border-radius:34px;background:#f1f5fb;box-shadow:0 27px 65px rgba(19,49,77,.20);height:min(760px,calc(100vh - 148px));min-height:620px;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.phone:before{position:absolute;content:"";height:18px;width:110px;background:#1d2c44;border-radius:0 0 18px 18px;top:0;left:50%;transform:translateX(-50%);z-index:5}
+.phone-top{height:26px;background:#fff;padding:5px 26px 0;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:850;color:#435269;flex:0 0 26px}
+.chat-header{height:66px;background:#fff;border-bottom:1px solid #e5ebf3;display:flex;align-items:center;padding:0 13px;gap:11px;flex:0 0 66px}
+.header-back{font-size:24px;color:#415979}
+.groupbadge{height:39px;width:39px;border-radius:13px;display:grid;place-items:center;background:#cfe8fe;color:#1c70b7;font-weight:900;font-size:13px;flex:none}
+.chat-header h3{font-size:14px;letter-spacing:-.015em}
+.chat-header p{font-size:10px;color:#8b9ba7;margin-top:3px}
+.header-icons{margin-left:auto;color:#64768e;display:flex;gap:11px;font-size:20px}
+.notice{background:#eaf1fa;border-bottom:1px solid #dbe5f2;text-align:center;color:#59758f;padding:7px 10px;font-size:10px;flex:0 0 auto}
+.notice.bad{background:#fff2e7;color:#a16d33}
+.chatbody{padding:17px 13px 15px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:12px;min-height:0;background:linear-gradient(#edf2fa,#f0f5fb)}
+.day{align-self:center;padding:5px 11px;border-radius:20px;background:#dce6f0;color:#7d8c9d;font-size:10px}
+.msgline{display:flex;gap:8px;align-items:flex-end;max-width:88%;align-self:flex-start}
+.msgline.me{align-self:flex-end;flex-direction:row-reverse}
+.msgline.bot{max-width:93%}
+.mavatar{height:27px;width:27px;flex:0 0 27px;border-radius:9px;background:#d2e7fc;color:#3276b9;display:grid;place-items:center;font-size:10px;font-weight:900}
+.msgline.bot .mavatar{background:#e2f3e7;color:#218264}
+.msgline.sales .mavatar{background:#fff0d9;color:#9c721e}
+.msgdetails{max-width:100%;min-width:0}
+.sender{font-size:10px;font-weight:750;color:#73849a;margin:0 0 4px 4px}
+.bubble{border-radius:14px 14px 14px 4px;padding:10px 12px;background:#fff;color:#233d55;box-shadow:0 1px 4px #24395b0c;line-height:1.52;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.me .bubble{background:#d5ebff;border-radius:14px 14px 4px 14px}
+.msgtime{font-size:9px;color:#93a2b1;margin-top:3px;padding:0 4px}
+.me .msgtime{text-align:right}
+.sysmsg{background:#e1e9f1;color:#71839a;padding:8px 12px;border-radius:18px;align-self:center;font-size:10px;text-align:center;max-width:92%}
+.typing{color:#8a9cab;font-size:11px;padding-left:37px;min-height:15px}
+.bottom{background:#fff;border-top:1px solid #e1e8f0;padding:10px 11px calc(12px + env(safe-area-inset-bottom));display:flex;gap:8px;align-items:end;flex:0 0 auto}
+.iconbtn{border:0;background:transparent;color:#7187a0;font-size:22px;padding:6px 3px;flex:none}
+.bottom textarea{flex:1;min-width:0;min-height:38px;max-height:90px;border:1px solid #dce6ef;border-radius:18px;padding:10px 12px;font-size:12px;resize:none;outline:none;line-height:1.35;background:#f8fafc}
+.send{border:0;background:#1678f5;color:#fff;font-weight:800;padding:10px 12px;border-radius:12px;font-size:11px;min-height:38px}
+.phonefoot{background:#fff;border-top:1px solid #edf1f5;height:16px;display:grid;place-items:center}
+.phonefoot span{background:#2c3445;height:4px;width:110px;border-radius:5px}
+.detailtop{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.status{font-size:10px;padding:5px 9px;border-radius:8px;background:var(--successbg);color:var(--success);font-weight:900}
+.status.bad{background:var(--warningbg);color:var(--warning)}
+.status.stop{background:var(--redbg);color:var(--red)}
+.summary{margin-top:17px;padding:15px;border-radius:14px;background:#f3f8ff;border:1px solid #e1edf9}
+.summary h3{margin-bottom:10px}
+.summary .infocell{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #dfeaf6;padding:9px 0;font-size:12px}
+.summary .infocell b{text-align:right;max-width:57%;overflow-wrap:anywhere}
+.summary .infocell:first-of-type{border-top:0}
+.timelinehead{margin:19px 0 11px;font-size:11px;font-weight:900;color:#566c83}
+.events{display:grid;gap:8px;max-height:185px;overflow:auto}
+.event{font-size:11px;display:flex;gap:8px;color:#627c95;line-height:1.5;padding-bottom:6px;border-bottom:1px solid #eef2f7}
+.event:before{content:"•";font-size:19px;color:#3587cb;line-height:.8}
+.event small{font-size:10px;color:#a1afbc;display:block}
+.infofooter{border-top:1px solid var(--line);margin-top:16px;padding-top:13px;color:#9aabbc;font-size:10px}
+.footer{max-width:1450px;margin:16px auto 0;color:#7a8ba0;font-size:11px;text-align:center}
+.toast{position:fixed;right:16px;bottom:17px;z-index:80;background:#233e55;color:#fff;max-width:420px;padding:12px 16px;border-radius:11px;box-shadow:0 16px 40px #0d1b3440;font-size:12px;display:none}
+.toast.show{display:block}
+.mobiletools{display:none}
+@media(max-width:1160px){.demo{grid-template-columns:230px minmax(320px,510px) minmax(215px,1fr);gap:11px}.content{padding:18px 12px}.panel{padding:15px}.phone{height:calc(100vh - 128px)}}
+@media(max-width:910px){.demo{grid-template-columns:200px minmax(290px,470px)}.details{display:none}.intro h1{font-size:22px}.appbar{padding:0 15px}}
+@media(max-width:660px){body{background:#eef3f9}.appbar{height:52px;padding:0 11px}.brandmark{height:28px;width:28px;border-radius:8px}.brand b{font-size:12px}.brand small{font-size:8px}.rightbar .link{font-size:10px}.chip{font-size:9px;padding:5px 7px}.content{padding:0;margin:0}.intro{padding:10px 12px 8px;margin:0;background:#fff;border-bottom:1px solid #e5edf6;align-items:center}.intro .kicker{display:none}.intro h1{font-size:14px}.intro p{font-size:10px;margin-top:2px}.demo{display:flex;flex-direction:column;gap:0;min-height:0}.panel.tools{padding:7px 9px;border-radius:0;border:0;box-shadow:none;border-bottom:1px solid #e0eaf4;display:flex;align-items:center;gap:8px;overflow-x:auto;white-space:nowrap}.tools h2,.tools .note,.tools .sectiontitle,.tools .groupselect,.tools .alert,.tools .controls{display:none}.tools .scenarios{display:flex;gap:7px}.tools .scenario{flex:0 0 auto;font-size:10px;padding:7px 9px;gap:5px}.tools .scenario b{font-size:12px}.mobiletools{display:flex;background:#fff;gap:6px;align-items:center;padding:8px 10px;border-bottom:1px solid #dfebf5;overflow-x:auto}.mobiletools button{border:1px solid #deebf7;background:#f5f9ff;border-radius:8px;padding:7px 9px;color:#315f8e;font-size:10px;font-weight:800;white-space:nowrap}.mobiletools button.active{background:#dceeff;border-color:#a5ccf9}.phone{border:0;border-radius:0;box-shadow:none;height:calc(100dvh - 182px);min-height:370px;width:100%;flex:1}.phone:before{display:none}.phone-top,.phonefoot{display:none}.chat-header{height:53px;flex-basis:53px;padding:0 11px}.notice{font-size:9px;padding:5px}.chatbody{padding:12px 10px 13px}.bottom{padding:8px 10px max(12px,env(safe-area-inset-bottom))}.footer{display:none}.toast{left:10px;right:10px;bottom:78px;max-width:none}}
+@media(max-width:370px){.rightbar .link{display:none}.mobiletools button{padding:6px 7px}.intro p{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="appbar">
+<div class="brand"><span class="brandmark">VM</span><span><b>LABEL<span>VIETMAX</span></b><small>ZALO BOT EXPERIENCE</small></span></div>
+<div class="rightbar"><span class="chip">MÔ PHỎNG · KHÔNG PHẢI ZALO THẬT</span><a class="link" target="_blank" rel="noopener noreferrer" href="https://lbvm-webapp-dashboard-demo.phonganh99.workers.dev/">Mở Web App ↗</a></div>
+</div>
+<main class="content">
+<div class="intro"><div><div class="kicker">TRẢI NGHIỆM PHÍA KHÁCH HÀNG</div><h1>Bot LBVM trong nhóm Zalo GMF</h1><p>Thử nhắn như khách thật. Bot chỉ trả lời khi đủ dữ liệu và đúng quy tắc.</p></div><span class="chip" id="topState">Đang mô phỏng</span></div>
+<div class="demo">
+<aside class="panel tools">
+<h2>Chọn nhóm và kịch bản</h2><p class="note">Dữ liệu giữa các nhóm được tách riêng. Bot không được tiết lộ đơn của nhóm khác.</p>
+<div class="groupselect" id="groups"></div>
+<div class="sectiontitle">BẤM ĐỂ THỬ NHANH</div>
+<div class="scenarios">
+<button class="scenario" data-scenario="five"><b>⑤</b> Khách gửi 5 tin đặt hàng</button>
+<button class="scenario" data-scenario="faq"><b>✧</b> Hỏi decal có chống nước?</button>
+<button class="scenario" data-scenario="status"><b>▤</b> Tra cứu tiến độ đơn</button>
+<button class="scenario" data-scenario="wrong"><b>⊘</b> Tra cứu đơn nhóm khác</button>
+<button class="scenario" data-scenario="price"><b>₫</b> Hỏi giá / giao gấp</button>
+<button class="scenario" data-scenario="file"><b>▣</b> Gửi file (giả lập)</button>
+</div>
+<div class="sectiontitle">THỬ CHẾ ĐỘ VẬN HÀNH</div>
+<div class="controls"><button class="secondary" id="handoff">Sales tiếp quản</button><button class="secondary" id="offline">Mất kết nối</button><button class="secondary" id="reset">Đặt lại</button></div>
+<div class="alert">Trong hệ thống thật, bộ gom tin có thể đợi khoảng 15–20 giây sau tin cuối (điều chỉnh qua thử nghiệm). <b>Demo rút ngắn còn 2,5 giây</b>. Khi cần báo giá, cam kết giao hoặc thiếu file, bot không tự xác nhận.</div>
+</aside>
+<div class="mobiletools" id="mobileGroups" aria-label="Chọn nhóm Zalo demo"></div>
+<div class="phone" aria-label="Mô phỏng giao diện cuộc trò chuyện nhóm Zalo">
+<div class="phone-top"><span>9:41</span><span>●●● ▰</span></div>
+<div class="chat-header"><span class="header-back">‹</span><span class="groupbadge" id="chatBadge">MK</span><div><h3 id="chatName">Nhóm Minh Khang</h3><p id="chatSub">Nhóm GMF · 3 thành viên · OA Label Vietmax</p></div><span class="header-icons">♧ ⋯</span></div>
+<div class="notice" id="notice">Đây là giao diện Zalo mô phỏng. Tin không gửi ra ngoài.</div>
+<div class="chatbody" id="chatbody"><div class="day">Hôm nay</div></div>
+<div class="typing" id="typing" aria-live="polite"></div>
+<div class="bottom"><button class="iconbtn" id="attach" type="button" title="Gửi file mẫu">⊕</button><textarea id="message" rows="1" placeholder="Nhắn tin trong nhóm..." aria-label="Nhắn tin cho bot demo"></textarea><button class="send" id="send" type="button">Gửi</button></div>
+<div class="phonefoot"><span></span></div>
+</div>
+<aside class="panel details">
+<div class="detailtop"><h2>Bot đã hiểu gì?</h2><span class="status" id="health">Mô phỏng</span></div>
+<p class="note">Bên phải là dữ liệu nội bộ của LBVM. Khách trong Zalo thật <b>không thấy</b> những thông số và nhật ký này.</p>
+<div class="summary" id="summary"></div>
+<div class="timelinehead">Nhật ký xử lý mô phỏng</div><div class="events" id="events"></div>
+<div class="infofooter">AI demo dùng quy tắc và phản hồi mẫu, không gọi Claude API. Nội dung kỹ thuật không phải cam kết thương mại.</div>
+</aside>
+</div>
+<div class="footer">Bản trình diễn độc lập · Không có kết nối Zalo OA/GMF, không gửi tin thật, không lưu dữ liệu khách hàng lên máy chủ.</div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+var KEY="lbvm-zalo-bot-demo-v1";
+var fresh={
+online:true,active:"mk",
+groups:{
+mk:{name:"Minh Khang Food",title:"Nhóm Minh Khang",badge:"MK",order:"DH-025",status:"Chờ file thiết kế",human:false,quantity:"",size:"",material:"",file:false,oldOrder:false,messages:[{who:"system",text:"Hôm nay · Nhóm GMF được tạo cho mục đích mô phỏng"},{who:"bot",text:"Xin chào anh/chị! Đây là nhóm hỗ trợ tem nhãn Label Vietmax.\nEm có thể giải đáp câu hỏi phổ thông, ghi nhận đơn nháp và tra cứu đơn được phép. Các vấn đề báo giá/giao gấp sẽ chuyển Sales.",time:"09:15"}]},
+ap:{name:"An Phát",title:"Nhóm An Phát",badge:"AP",order:"DH-024",status:"Đang thiết kế",human:false,quantity:"35.000",size:"60 × 40 mm",material:"PP",file:true,oldOrder:true,messages:[{who:"system",text:"Hôm nay · Nhóm GMF được tạo cho mục đích mô phỏng"},{who:"customer",text:"Mẫu tem 60×40 của bên anh đang thiết kế đúng không?",time:"09:15"},{who:"bot",text:"Em đã ghi nhận câu hỏi. Anh có thể tra cứu theo mẫu lệnh #LBVM TIENDO DH-024 trong nhóm này ạ.",time:"09:16"}]},
+bm:{name:"Bảo Minh",title:"Nhóm Bảo Minh",badge:"BM",order:"DH-026",status:"Chờ quản lý duyệt",human:false,quantity:"30.000",size:"45 × 25 mm",material:"Decal giấy",file:true,oldOrder:true,messages:[{who:"system",text:"Hôm nay · Nhóm GMF được tạo cho mục đích mô phỏng"}]}
+},
+logs:[{text:"Khởi động mô phỏng. Không dùng API Zalo hoặc Claude.",time:"09:41"}]
+};
+var state;try{var raw=localStorage.getItem(KEY);state=raw?JSON.parse(raw):JSON.parse(JSON.stringify(fresh));if(!state.groups||!state.groups.mk)throw Error("corrupt")}catch(e){state=JSON.parse(JSON.stringify(fresh))}
+var pending={},timers={},toastTimer;
+var $=function(id){return document.getElementById(id)};
+function safe(s){return String(s===undefined?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function time(){return new Date().toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})}
+function notify(s){var e=$("toast");e.textContent=s;e.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){e.classList.remove("show")},3000)}
+function group(){return state.groups[state.active]}
+function addlog(s){state.logs.unshift({text:s,time:time()});if(state.logs.length>30)state.logs.pop();save();renderDetails()}
+function addmsg(id,who,text){var g=state.groups[id];if(!g)return;g.messages.push({who:who,text:text,time:time()});save();if(state.active===id)renderChat()}
+function renderGroups(){
+var ids=Object.keys(state.groups);
+$("groups").innerHTML=ids.map(function(id){var g=state.groups[id];return '<button type="button" class="groupbtn '+(state.active===id?'active':'')+'" data-group="'+id+'"><span class="gavatar">'+safe(g.badge)+'</span><span><b>'+safe(g.title)+'</b><small>'+safe(g.order)+' · '+safe(g.status)+'</small></span></button>'}).join("");
+$("mobileGroups").innerHTML=ids.map(function(id){var g=state.groups[id];return '<button class="'+(state.active===id?'active':'')+'" data-group="'+id+'">'+safe(g.title)+'</button>'}).join("");
+}
+function renderChat(){
+var g=group();
+$("chatBadge").textContent=g.badge;$("chatName").textContent=g.title;$("chatSub").textContent="GMF · Khách, Sales và OA Label Vietmax";
+var arr=['<div class="day">Hôm nay</div>'];
+g.messages.forEach(function(m){
+if(m.who==="system"){arr.push('<div class="sysmsg">'+safe(m.text)+'</div>');return}
+var mine=m.who==="customer";
+var who=m.who==="bot"?"Label Vietmax OA":m.who==="sales"?"Sales LBVM":"Bạn (khách)";
+var mark=m.who==="bot"?"OA":m.who==="sales"?"S":"KH";
+arr.push('<div class="msgline '+(mine?'me':m.who)+'"><div class="mavatar">'+mark+'</div><div class="msgdetails"><div class="sender">'+safe(who)+'</div><div class="bubble">'+safe(m.text)+'</div><div class="msgtime">'+safe(m.time||"")+'</div></div></div>');
+});
+$("chatbody").innerHTML=arr.join("");
+$("chatbody").scrollTop=$("chatbody").scrollHeight;
+$("notice").className="notice"+(state.online?"":" bad");
+$("notice").textContent=state.online?"Giao diện mô phỏng Zalo · tin nhắn chỉ tồn tại trong demo":"Đã giả lập mất kết nối API: khách vẫn nhắn nhưng AI LBVM không nhận/gửi tự động";
+$("typing").textContent=pending[state.active]&&state.online&&!g.human?"Đang gom tin và kiểm tra dữ liệu...":"";
+$("handoff").textContent=g.human?"Bàn giao lại AI":"Sales tiếp quản";
+$("offline").textContent=state.online?"Mất kết nối":"Khôi phục kết nối";
+$("health").className="status"+(!state.online?" stop":g.human?" bad":"");
+$("health").textContent=!state.online?"API lỗi":g.human?"Sales đang xử lý":"AI có thể phản hồi";
+$("topState").textContent=state.online?"Mô phỏng OA ổn định":"Mô phỏng OA lỗi";
+}
+function renderDetails(){
+var g=group();
+$("summary").innerHTML='<h3>'+safe(g.order)+' · Đơn nháp/đang xử lý</h3>'+
+[['Khách hàng',g.name],['Số lượng',g.quantity||"Chưa xác nhận"],['Kích thước',g.size||"Chưa xác nhận"],['Chất liệu',g.material||"Chưa xác nhận"],['Đối chiếu mẫu cũ',g.oldOrder?"Có yêu cầu":"Chưa có"],['File thiết kế',g.file?"Đã nhận file mẫu":"Chưa nhận"],['Trạng thái đơn',g.status],['Chế độ chat',g.human?"Sales HUMAN":"AI AUTO-LIMITED"]].map(function(x){return '<div class="infocell"><span>'+safe(x[0])+'</span><b>'+safe(x[1])+'</b></div>'}).join("");
+$("events").innerHTML=state.logs.slice(0,9).map(function(x){return '<div class="event"><div>'+safe(x.text)+'<small>'+safe(x.time)+'</small></div></div>'}).join("");
+renderGroups();
+}
+function render(){renderChat();renderDetails()}
+function switchGroup(id){if(!state.groups[id])return;state.active=id;save();render()}
+function incoming(txt,id,kind){id=id||state.active;if(!txt||!txt.trim())return;addmsg(id,"customer",txt);if(!state.online){addlog("Nhóm "+state.groups[id].name+": tin khách chưa được xử lý vì API giả lập bị lỗi.");notify("Kết nối lỗi: bot không nhận tin này. Sales cần đối soát.");return}
+if(state.groups[id].human){addlog("Nhóm "+state.groups[id].name+": Sales đang tiếp quản. AI không tự trả lời.");return}
+(pending[id]||(pending[id]=[])).push({text:txt,kind:kind||"text"});
+clearTimeout(timers[id]);
+timers[id]=setTimeout(function(){process(id)},2500);
+renderChat();
+}
+function compact(t){return t.toLocaleLowerCase("vi").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d")}
+function process(id){
+var batch=pending[id]||[];if(!batch.length)return;pending[id]=[];var g=state.groups[id];
+if(!state.online||g.human){addlog("Không tự xử lý cụm tin nhóm "+g.name+" vì đang mất kết nối / Sales tiếp quản.");if(state.active===id)render();return}
+var all=batch.map(function(x){return x.text}).join(" "),n=compact(all);
+var cmd=all.toUpperCase().match(/#LBVM\s+TIENDO\s+(DH-\d{3,})/);
+if(cmd){
+ if(cmd[1]!==g.order){addmsg(id,"bot","Xin lỗi, em không thể tra cứu mã đơn này trong nhóm hiện tại. Anh/chị vui lòng liên hệ Sales phụ trách để xác minh quyền truy cập.");addlog("Đã chặn tra cứu "+cmd[1]+" do không thuộc nhóm "+g.name+".")}
+ else{addmsg(id,"bot","Thông tin đơn "+g.order+" được hệ thống mẫu xác nhận:\n• Trạng thái: "+g.status+"\n• Khách hàng: "+g.name+"\nĐây là dữ liệu DEMO, không phải trạng thái đơn thật.");addlog("Tra cứu đúng nhóm: "+g.order+" → "+g.status+".")}
+ if(state.active===id)render();return;
+}
+if(n.includes("bao gia")||n.includes("gia bao nhieu")||n.includes("giao gap")||n.includes("khieu nai")||n.includes("bao nhieu tien")){
+ g.human=true;addmsg(id,"system","Đã tạo yêu cầu chuyển Sales. AI không tự báo giá, cam kết giao hàng hoặc xử lý khiếu nại.");addlog("Chuyển Sales nhóm "+g.name+": yêu cầu thương mại / ngoại lệ, bot không tự trả lời.");render();return;
+}
+var isOrder=n.includes("dat lai")||n.includes("dat ")||n.includes("so luong")||n.includes("kich thuoc")||n.includes("decal nhua")||n.includes("mau tem")||n.includes("file thiet ke")||batch.some(function(x){return x.kind==="file"});
+if(isOrder){
+if(n.includes("dat lai"))g.oldOrder=true;
+var quantity=all.match(/\b(\d{1,3}(?:[.,]\d{3})+|\d{4,7})\s*(?:cai|chiếc|tem|con)?\b/i);
+if(quantity)g.quantity=quantity[1].replace(/[.,]/g,".");
+var size=all.match(/(\d{2,3})\s*[x×]\s*(\d{2,3})/i);
+if(size)g.size=size[1]+" × "+size[2]+" mm";
+if(n.includes("decal nhua"))g.material="Decal nhựa";
+if(batch.some(function(x){return x.kind==="file"}))g.file=true;
+g.status=g.file?(g.oldOrder?"Chờ kiểm tra mẫu cũ / thông số khác":"Chờ kiểm tra đủ thông số"):"Chờ file thiết kế / bổ sung thông số";
+addlog("Gom "+batch.length+" tin nhóm "+g.name+" vào 1 bản nháp "+g.order+"; "+(g.file?"đã có file mô phỏng":"chưa có file thật")+".");
+var reply="Dạ em đã ghi nhận yêu cầu vào đơn nháp "+g.order+":\n"+
+"• Số lượng: "+(g.quantity||"cần bổ sung")+"\n"+
+"• Kích thước: "+(g.size||"cần bổ sung")+"\n"+
+"• Chất liệu: "+(g.material||"cần xác minh")+"\n"+
+"• File thiết kế: "+(g.file?"đã nhận bản mô phỏng, cần kiểm tra":"chưa nhận")+"\n";
+reply+=g.file?"Em chuyển Sales kiểm tra bản mẫu và các thông số còn thiếu trước khi trình duyệt.":"Anh/chị gửi giúp file thiết kế và thông tin còn thiếu nhé. Em chưa chốt đơn hay lịch sản xuất.";
+addmsg(id,"bot",reply);render();return;
+}
+if(n.includes("chong nuoc")||n.includes("chiu nuoc")){
+addmsg(id,"bot","Dạ, khả năng chịu nước của tem phụ thuộc vật liệu, mực in, keo dán và môi trường sử dụng. Anh/chị cho em biết tem dùng trong điều kiện nào để Sales tư vấn đúng loại phù hợp ạ.\n(Nguồn: FAQ kỹ thuật đã duyệt — dữ liệu mô phỏng)");addlog("Trả lời FAQ an toàn cho "+g.name+" từ kho kiến thức mẫu.");render();return;
+}
+addmsg(id,"system","Nội dung này chưa có câu trả lời tự động được duyệt. Đã chuyển gợi ý cho Sales xem xét; AI không tự gửi câu trả lời chưa kiểm chứng.");addlog("Câu hỏi chưa thuộc FAQ đã duyệt; giữ chế độ an toàn và chuyển Sales.");render();
+}
+function scenario(t){
+var id=state.active,g=group();if(t==="five"){
+if(!state.online||g.human){notify("Khôi phục kết nối hoặc bàn giao lại AI trước khi thử.");return}
+["Em đặt lại mẫu tem lần trước nhé.","Số lượng 50.000 chiếc.","Kích thước 50×30 mm.","Chuyển sang decal nhựa.","Chờ em gửi file thiết kế mới."].forEach(function(x){incoming(x,id)});
+notify("Đã nhận 5 tin liên tiếp. Bot gom và phản hồi sau 2,5 giây.");return
+}
+if(t==="faq"){incoming("Decal nhựa có chống nước không?",id);return}
+if(t==="status"){incoming("#LBVM TIENDO "+g.order,id);return}
+if(t==="wrong"){incoming("#LBVM TIENDO "+(id==="mk"?"DH-024":"DH-025"),id);return}
+if(t==="price"){incoming("Báo giá giúp anh, bên em có giao gấp ngày mai được không?",id);return}
+if(t==="file"){incoming("📎 file-thiet-ke-moi.pdf (file giả lập đã nhận)",id,"file");return}
+}
+document.addEventListener("click",function(ev){
+var btn=ev.target.closest("button");if(!btn)return;
+if(btn.hasAttribute("data-group")){switchGroup(btn.getAttribute("data-group"));return}
+if(btn.hasAttribute("data-scenario")){scenario(btn.getAttribute("data-scenario"));return}
+if(btn.id==="send"){var input=$("message"),txt=input.value.trim();if(!txt){notify("Hãy nhập nội dung tin nhắn");return}input.value="";incoming(txt);return}
+if(btn.id==="attach"){scenario("file");return}
+if(btn.id==="handoff"){var g=group();g.human=!g.human;if(g.human){clearTimeout(timers[state.active]);pending[state.active]=[];addmsg(state.active,"system","Sales đã tiếp quản hội thoại (demo). AI tạm ngừng trả lời.");addlog("Sales tiếp quản nhóm "+g.name+".");}else{addmsg(state.active,"sales","Sales đã bàn giao lại hệ thống trả lời tự động trong phạm vi được phép (demo).");addlog("Bàn giao nhóm "+g.name+" về AI AUTO-LIMITED.");}render();return}
+if(btn.id==="offline"){state.online=!state.online;if(!state.online){Object.keys(timers).forEach(function(k){clearTimeout(timers[k]);pending[k]=[]});addlog("Mô phỏng mất kết nối OA: tạm dừng bot, Sales làm việc trên Zalo.");notify("Đã giả lập mất kết nối. Bot không phản hồi.");}else{addlog("Đã khôi phục kết nối giả lập. Tin cũ cần đối soát, không tự phát lại.");notify("Đã khôi phục demo. Các tin trong lúc mất kết nối không tự gửi lại.");}render();return}
+if(btn.id==="reset"){if(!confirm("Đưa demo Zalo Bot về trạng thái ban đầu?"))return;Object.keys(timers).forEach(function(k){clearTimeout(timers[k])});timers={};pending={};state=JSON.parse(JSON.stringify(fresh));save();render();notify("Đã khôi phục dữ liệu mẫu.");return}
+});
+$("message").addEventListener("keydown",function(ev){if(ev.key==="Enter"&&!ev.shiftKey){ev.preventDefault();$("send").click()}});
+render();
+})();
+</script>
+</body></html>
