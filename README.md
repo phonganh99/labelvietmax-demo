@@ -2,6 +2,13 @@
 
 **Bản demo tương tác, không phải hệ thống sản xuất.** Trang dùng hoàn toàn dữ liệu giả lập và không kết nối Zalo OA/GMF, Claude API hay database khách hàng.
 
+## Xem giao diện khách hàng Zalo Bot
+
+- [Mở Zalo Bot Demo (Cloudflare)](https://lbvm-zalo-bot-demo.phonganh99.workers.dev/)
+- [Mã nguồn Zalo Bot](./zalo-bot.html)
+- Hỗ trợ 3 nhóm GMF mẫu, gom 5 tin, FAQ được duyệt, tra cứu đúng/sai nhóm, chuyển Sales và mô phỏng mất kết nối.
+- Bản chat là mô phỏng giao diện để đánh giá trải nghiệm, không phải giao diện chính thức của Zalo hay kết nối OA thật.
+
 ## Các màn hình đang chạy mô phỏng
 
 1. **Tổng quan:** KPI cập nhật theo số đơn trong demo, bảng đơn cần xử lý, biểu đồ minh họa, hoạt động.
