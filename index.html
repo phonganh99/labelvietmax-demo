@@ -322,7 +322,7 @@ function renderInbox(){
  el('takeover').textContent=c.mode==='HUMAN'?'↺ Bàn giao AI':'◉ Sales tiếp quản';
  el('composerState').textContent='Trạng thái: '+c.mode;
  el('sendMessage').textContent=state.connected?'Gửi demo ↗':'Lưu nháp nội bộ';
- el('sendHint').textContent=state.connected?'Chỉ tạo tin mẫu trên trình duyệt':'Mất đồng bộ — không thể gửi tới OA';
+ el('sendHint').textContent=state.connected?'Chỉ tạo tin mẫu trên trình duyệt':'Mất đồng bộ — không thể gửi tới OA';el('messageText').value=c.draft||'';
 }
 function renderOrders(){
  var filters=['Tất cả','Chờ thông tin','Chờ duyệt','Thiết kế','Sản xuất','QC','Giao hàng','Hoàn tất'];
@@ -378,7 +378,7 @@ document.addEventListener('click',function(ev){
  if(target.hasAttribute('data-simulate')){simulateBatch();return}
  if(target.id==='aiDraft'){var c=currentChat();var draft=c.order==='DH-025'||c.id.startsWith('sim')?'Dạ em đã ghi nhận yêu cầu. Đơn đang chờ file thiết kế mới; anh/chị gửi giúp em file để bên em xác minh thông số trước khi sản xuất ạ.':'Dạ em đã ghi nhận thông tin. Em sẽ đối chiếu với đơn và phản hồi theo dữ liệu đã xác nhận ạ.';el('messageText').value=draft;toast('AI đã soạn câu trả lời mẫu — Sales cần kiểm tra trước khi gửi');return}
  if(target.id==='takeover'){var c=currentChat();c.mode=c.mode==='HUMAN'?'AUTO':'HUMAN';log('CSKH',c.name+': '+(c.mode==='HUMAN'?'Sales tiếp quản, AI tạm dừng.':'trả lại chế độ AI được phép hỗ trợ.'));renderInbox();toast(c.mode==='HUMAN'?'Sales đã tiếp quản (demo)':'Đã bàn giao lại AI (demo)');return}
- if(target.id==='sendMessage'){var c=currentChat(),message=el('messageText').value.trim();if(!message){toast('Nhập nội dung trước khi gửi');return}if(!state.connected){log('Inbox','Đã lưu nháp chưa gửi cho '+c.name+' do mất đồng bộ.');toast('Mất kết nối: chỉ lưu nháp. Khách không nhận tin.');return}c.messages.push({by:'mine',text:message,time:stamp()});el('messageText').value='';log('Inbox','Sales gửi tin giả lập cho '+c.name+'.');renderInbox();toast('Đã tạo tin demo; không gửi vào Zalo thật');return}
+ if(target.id==='sendMessage'){var c=currentChat(),message=el('messageText').value.trim();if(!message){toast('Nhập nội dung trước khi gửi');return}if(!state.connected){c.draft=message;log('Inbox','Lưu bản nháp nội bộ cho '+c.name+' do mất đồng bộ.');toast('Đã lưu nháp nội bộ. Không gửi tin tới khách.');return}c.messages.push({by:'mine',text:message,time:stamp()});c.draft='';el('messageText').value='';log('Inbox','Sales gửi tin giả lập cho '+c.name+'.');renderInbox();toast('Đã tạo tin demo; không gửi vào Zalo thật');return}
  if(target.id==='toggleFailure'){state.connected=!state.connected;log('Kết nối',state.connected?'Khôi phục kết nối mô phỏng, có thể thử chat.':'Mô phỏng mất đồng bộ; khóa gửi tự động và yêu cầu Sales tiếp quản Zalo.');renderSystem();render();toast(state.connected?'Đã khôi phục kết nối giả lập':'Đã chuyển chế độ dự phòng, không gửi tin');return}
  if(target.id==='resetDemo'){if(confirm('Khôi phục toàn bộ dữ liệu mẫu về trạng thái ban đầu?')){state=JSON.parse(JSON.stringify(initial));ui.chat='c1';ui.filter='Tất cả';ui.q='';ui.chatQ='';store();go('home');toast('Đã khôi phục dữ liệu demo')}} 
 });
